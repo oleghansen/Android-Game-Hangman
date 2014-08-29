@@ -49,6 +49,8 @@ public class Spill extends Activity {
 		Button Y = (Button) findViewById(R.id.bY);
 		Button Z = (Button) findViewById(R.id.bZ);
 		
+		// Hei 
+		
 		A.setOnClickListener(onClickListener);
 		B.setOnClickListener(onClickListener);
 		C.setOnClickListener(onClickListener);
