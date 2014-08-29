@@ -17,6 +17,16 @@ public final class R {
         public static final int abc_slide_out_top=0x7f040005;
     }
     public static final class array {
+        /**   <item>FJELL</item>  
+    <item>FLUESOPP</item>  
+    <item>MARGARIN</item>  
+    <item>OSTEPOP</item>
+    <item>TORUNN</item>  
+    <item>ENGEL</item>
+    <item>EVENTYR</item>  
+    <item>GALGE</item>  
+    <item>BORD</item>  
+         */
         public static final int ordArray=0x7f0e0000;
     }
     public static final class attr {

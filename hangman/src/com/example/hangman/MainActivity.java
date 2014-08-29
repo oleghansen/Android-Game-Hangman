@@ -43,10 +43,12 @@ public class MainActivity extends ActionBarActivity {
 						{
 							Intent startGame = new Intent("com.example.hangman.SPILL");
 							startActivity(startGame);
+							
 						}
 					}
 				};
 				timer.start();
+				
 				
 				
 				
