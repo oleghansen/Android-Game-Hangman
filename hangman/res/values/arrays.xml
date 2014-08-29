@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>  
+    <resources>  
+    <string-array name="ordArray">  
+    <item>LOMPE</item>  
+    <item>FJELL</item>  
+    <item>FLUESOPP</item>  
+    <item>MARGARIN</item>  
+    <item>OST</item>
+    <item>TORUNN</item>  
+    <item>GALGE</item>  
+    <item>BORD</item>  
+     </string-array>
+    </resources>

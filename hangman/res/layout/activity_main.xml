@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/hangman"
+    android:icon="@drawable/ic_hangman"
+    tools:context="com.example.hangman.MainActivity" >
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:background="@xml/rounded_blue"
+        android:height="60dp"
+        android:text="@string/start_game"
+        android:textColor="#ffffff"
+        android:width="250dp" />
+
+    <ImageView
+        android:id="@+id/imageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:clickable="false"
+        android:cropToPadding="false"
+        android:src="@drawable/ic_title" />
+
+</RelativeLayout>
