@@ -37,7 +37,6 @@ public class Spill extends Activity {
 		tekst= (EditText) findViewById(R.id.editText1);
 
 		nyttSpill();
-		trektOrd = trekkOrd();
 	}
 
 	@Override
@@ -49,7 +48,7 @@ public class Spill extends Activity {
 	public void nyttSpill()
 	{
 		feilGjett = 0;
-		
+		trektOrd = trekkOrd();
 		
 		for(int i = 0; i < trektOrd.length(); i++)
 		{
