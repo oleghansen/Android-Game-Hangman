@@ -18,7 +18,7 @@ public class Startskjerm extends Activity {
 			{
 				try
 				{
-					sleep(5000);
+					sleep(1000);
 				}
 				catch (InterruptedException e)
 				{

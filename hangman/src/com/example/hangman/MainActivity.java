@@ -17,7 +17,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        minSang = MediaPlayer.create(MainActivity.this, R.raw.aidsmachine);
+        minSang = MediaPlayer.create(MainActivity.this, R.raw.soundtrack);
         minSang.start();
         
         final Button startKnapp = (Button)findViewById(R.id.buttonStart);

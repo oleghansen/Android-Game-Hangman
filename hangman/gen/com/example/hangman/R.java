@@ -1250,7 +1250,14 @@ containing a value of this type.
         public static final int main=0x7f0f0000;
     }
     public static final class raw {
-        public static final int aidsmachine=0x7f060000;
+        public static final int riktig1=0x7f060000;
+        public static final int riktig2=0x7f060001;
+        public static final int riktig3=0x7f060002;
+        public static final int riktig4=0x7f060003;
+        public static final int riktig5=0x7f060004;
+        public static final int riktig6=0x7f060005;
+        public static final int soundtrack=0x7f060006;
+        public static final int vinn=0x7f060007;
     }
     public static final class string {
         public static final int a=0x7f0c0012;
@@ -1557,6 +1564,8 @@ containing a value of this type.
     }
     public static final class xml {
         public static final int rounded_blue=0x7f050000;
+        public static final int rounded_green=0x7f050001;
+        public static final int rounded_red=0x7f050002;
     }
     public static final class styleable {
         /**  ============================================ 

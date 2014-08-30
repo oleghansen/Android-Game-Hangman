@@ -5,8 +5,8 @@
        android:endColor="#2D8CD6"
        android:angle="270"></gradient>
 
-    <corners android:bottomRightRadius="0dp"
+    <corners android:bottomRightRadius="25dp"
        android:bottomLeftRadius="25dp"
-       android:topLeftRadius="0dp"
+       android:topLeftRadius="25dp"
        android:topRightRadius="25dp"></corners>
 </shape>

@@ -1,8 +1,9 @@
 package com.example.hangman;
 
 import java.util.Random;
-import java.lang.*;
 import android.app.Activity;
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,45 +12,45 @@ import android.widget.EditText;
 
 public class Spill extends Activity {
     
+	MediaPlayer riktigLyd1, riktigLyd2, riktigLyd3, riktigLyd4, riktigLyd5, riktigLyd6, vinnLyd;
 	StringBuilder uferdigOrd;
 	String ferdigOrd;
-	int feilGjett;
+	int feilGjettTeller, riktigGjettTeller;
 	EditText tekst;
+	Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, Rb, S, T, U, V, W, X, Y, Z;
+
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+	protected void onCreate(Bundle savedInstanceState) {	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.spill);
 		
-		Button A = (Button) findViewById(R.id.bA);
-		Button B = (Button) findViewById(R.id.bB);
-		Button C = (Button) findViewById(R.id.bC);
-		Button D = (Button) findViewById(R.id.bD);
-		Button E = (Button) findViewById(R.id.bE);
-		Button F = (Button) findViewById(R.id.bF);
-		Button G = (Button) findViewById(R.id.bG);
-		Button H = (Button) findViewById(R.id.bH);
-		Button I = (Button) findViewById(R.id.bI);
-		Button J = (Button) findViewById(R.id.bJ);
-		Button K = (Button) findViewById(R.id.bK);
-		Button L = (Button) findViewById(R.id.bL);
-		Button M = (Button) findViewById(R.id.bM);
-		Button N = (Button) findViewById(R.id.bN);
-		Button O = (Button) findViewById(R.id.bO);
-		Button P = (Button) findViewById(R.id.bP);
-		Button Q = (Button) findViewById(R.id.bQ);
-		Button R = (Button) findViewById(R.id.bR);
-		Button S = (Button) findViewById(R.id.bS);
-		Button T = (Button) findViewById(R.id.bT);
-		Button U = (Button) findViewById(R.id.bU);
-		Button V = (Button) findViewById(R.id.bV);
-		Button W = (Button) findViewById(R.id.bW);
-		Button X = (Button) findViewById(R.id.bX);
-		Button Y = (Button) findViewById(R.id.bY);
-		Button Z = (Button) findViewById(R.id.bZ);
-		
-		// Hei 
+		A = (Button) findViewById(R.id.bA);
+		B = (Button) findViewById(R.id.bB);
+		C = (Button) findViewById(R.id.bC);
+		D = (Button) findViewById(R.id.bD);
+		E = (Button) findViewById(R.id.bE);
+		F = (Button) findViewById(R.id.bF);
+		G = (Button) findViewById(R.id.bG);
+		H = (Button) findViewById(R.id.bH);
+		I = (Button) findViewById(R.id.bI);
+		J = (Button) findViewById(R.id.bJ);
+		K = (Button) findViewById(R.id.bK);
+		L = (Button) findViewById(R.id.bL);
+		M = (Button) findViewById(R.id.bM);
+		N = (Button) findViewById(R.id.bN);
+		O = (Button) findViewById(R.id.bO);
+		P = (Button) findViewById(R.id.bP);
+		Q = (Button) findViewById(R.id.bQ);
+		Rb = (Button) findViewById(R.id.bR);
+		S = (Button) findViewById(R.id.bS);
+		T = (Button) findViewById(R.id.bT);
+		U = (Button) findViewById(R.id.bU);
+		V = (Button) findViewById(R.id.bV);
+		W = (Button) findViewById(R.id.bW);
+		X = (Button) findViewById(R.id.bX);
+		Y = (Button) findViewById(R.id.bY);
+		Z = (Button) findViewById(R.id.bZ);
 		
 		A.setOnClickListener(onClickListener);
 		B.setOnClickListener(onClickListener);
@@ -68,7 +69,7 @@ public class Spill extends Activity {
 		O.setOnClickListener(onClickListener);
 		P.setOnClickListener(onClickListener);
 		Q.setOnClickListener(onClickListener);
-		R.setOnClickListener(onClickListener);
+		Rb.setOnClickListener(onClickListener);
 		S.setOnClickListener(onClickListener);
 		T.setOnClickListener(onClickListener);
 		U.setOnClickListener(onClickListener);
@@ -78,7 +79,16 @@ public class Spill extends Activity {
 		Y.setOnClickListener(onClickListener);
 		Z.setOnClickListener(onClickListener);
 		
-		tekst= (EditText) findViewById(R.id.editText1);
+		tekst = (EditText) findViewById(R.id.editText1);
+		
+		riktigLyd1 = MediaPlayer.create(this, R.raw.riktig1);
+		riktigLyd2 = MediaPlayer.create(this, R.raw.riktig2);
+		riktigLyd3 = MediaPlayer.create(this, R.raw.riktig3);
+		riktigLyd4 = MediaPlayer.create(this, R.raw.riktig4);
+		riktigLyd5 = MediaPlayer.create(this, R.raw.riktig5);
+		riktigLyd6 = MediaPlayer.create(this, R.raw.riktig6);
+		vinnLyd = MediaPlayer.create(this, R.raw.vinn);
+		
 
 		nyttSpill();
 	}
@@ -92,7 +102,8 @@ public class Spill extends Activity {
 	public void nyttSpill()
 	{
 		
-		feilGjett = 0;
+		feilGjettTeller = 0;
+		riktigGjettTeller = 0;
 		ferdigOrd = trekkOrd();
 		uferdigOrd = new StringBuilder();
 		
@@ -123,20 +134,55 @@ public class Spill extends Activity {
 		
 	}
 	
-	public void gjett(char a)
+	public void gjett(char a, Button s)
 	{
 		System.out.println("Ferdig ord: " + ferdigOrd);
 		System.out.println("Uferdig ord: " + uferdigOrd);
 		boolean riktigGjett = false;
+		s.setEnabled(false);
+		
 		for(int i = 0; i < uferdigOrd.length(); i++)
 		{
 			if (ferdigOrd.charAt(i) == a)
 			{
 				
 				riktigGjett = true;
+				riktigGjettTeller++;
 				System.out.println("Bokstaven " + a + " finnes i ordet!");
 				uferdigOrd.setCharAt(i, a);
 				tekst.setText(uferdigOrd);
+				s.setBackgroundResource(R.xml.rounded_green);
+				
+				if(uferdigOrd.equals(ferdigOrd))
+				{
+					spillFerdig();
+				}
+				
+				if(riktigGjettTeller >= 1)
+				{
+					switch(riktigGjettTeller){
+		            case 1:	
+		            	riktigLyd1.start();
+		            break;
+		            case 2:	
+		            	riktigLyd2.start();
+		            break;
+		            case 3:	
+		            	riktigLyd3.start();
+		            break;
+		            case 4:	
+		            	riktigLyd4.start();
+		            break;
+		            case 5:	
+		            	riktigLyd5.start();
+		            break;
+		            case 6:	
+		            	riktigLyd6.start();
+		            break;
+					}
+				}
+				else
+					riktigLyd6.start();
 			}
 		}
 		
@@ -144,16 +190,19 @@ public class Spill extends Activity {
 		{
 			// Kode for å vise bokstav som var feil, samt tegne hangman
 			// feilGjett();
-			feilGjett++;
-			System.out.println(feilGjett);
+			feilGjettTeller++;
+			System.out.println(feilGjettTeller);
+			s.setBackgroundResource(R.xml.rounded_red);
 		}
 		
-		if(feilGjett == 6)
+		if(feilGjettTeller == 6)
 		{
 			// jalla balla
-			// Avslutt spillet
+			
 			System.out.println("Avslutter spill");
+			finish();
 		}
+		
 	}
 	
 	public String trekkOrd()
@@ -163,85 +212,105 @@ public class Spill extends Activity {
 		return randomOrd;
 	}
 	
+	public void spillFerdig()
+	{
+		vinnLyd.start();
+		Intent openStartskjerm = new Intent("com.example.hangman.STARTSKJERM");
+		startActivity(openStartskjerm);
+		finish();
+	}
+	
 	private OnClickListener onClickListener = new OnClickListener() {
 		 @Override
 	     public void onClick(View v) 
 	     {
 	         switch(v.getId()){
 	             case R.id.bA:
-	                  gjett('A');
+	                  gjett('A', A);
+	          
 	             break;
 	             case R.id.bB:
-	            	 gjett('B');
+	            	 gjett('B', B);
+	            
 	             break;
 	             case R.id.bC:
-	            	 gjett('C');
+	            	 gjett('C', C);
+	            
 	             break;
 	             case R.id.bD:
-	                  gjett('D');
+	                  gjett('D', D);
+	        
 	             break;
 	             case R.id.bE:
-	            	 gjett('E');
+	            	 gjett('E', E);
+	            	
 	             break;
 	             case R.id.bF:
-	            	 gjett('F');
+	            	 gjett('F', F);
+	          
 	             break;
 	             case R.id.bG:
-	                  gjett('G');
+	                  gjett('G', G);
+	           
 	             break;
 	             case R.id.bH:
-	            	 gjett('H');
+	            	 gjett('H', H);
+	        
 	             break;
 	             case R.id.bI:
-	            	 gjett('I');
+	            	 gjett('I', I);
+	            	
 	             break;
 	             case R.id.bJ:
-	                  gjett('J');
+	                  gjett('J', J);
 	             break;
 	             case R.id.bK:
-	            	 gjett('K');
+	            	 gjett('K', K);
 	             break;
 	             case R.id.bL:
-	            	 gjett('L');
+	            	 gjett('L', L);
 	             break;
 	             case R.id.bM:
-	                  gjett('M');
+	                  gjett('M', M);
 	             break;
 	             case R.id.bN:
-	            	 gjett('N');
+	            	 gjett('N', N);
 	             break;
 	             case R.id.bO:
-	            	 gjett('O');
+	            	 gjett('O', O);
 	             break;
 	             case R.id.bP:
-	                  gjett('P');
+	                  gjett('P', P);
 	             break;
 	             case R.id.bQ:
-	            	 gjett('Q');
+	            	 gjett('Q', Q);
 	             break;
 	             case R.id.bR:
-	            	 gjett('R');
+	            	 gjett('R', Rb);
 	             break;
 	             case R.id.bS:
-	                  gjett('S');
+	                  gjett('S', S);
 	             break;
 	             case R.id.bT:
-	            	 gjett('T');
+	            	 gjett('T', T);
 	             break;
 	             case R.id.bU:
-	            	 gjett('U');
+	            	 gjett('U', U);
 	             break;
 	             case R.id.bV:
-	                  gjett('V');
+	                  gjett('V', V);
+	             break;
+	             case R.id.bW:
+	                  gjett('W', W);
 	             break;
 	             case R.id.bX:
-	            	 gjett('X');
+	            	 gjett('X', X);
 	             break;
 	             case R.id.bY:
-	            	 gjett('Y');
+	            	 gjett('Y', Y);            	 
 	             break;
 	             case R.id.bZ:
-	            	 gjett('Z');
+	            	 gjett('Z', Z);
 	             break;
 	         }
 
