@@ -8,22 +8,61 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class Spill extends Activity {
     
-	MediaPlayer riktigLyd1, riktigLyd2, riktigLyd3, riktigLyd4, riktigLyd5, riktigLyd6, vinnLyd;
+	MediaPlayer mediaPlayer, knappeLyd;
 	StringBuilder uferdigOrd;
-	String ferdigOrd;
+	String ferdigOrd, bokstavString;
 	int feilGjettTeller, riktigGjettTeller;
-	EditText tekst;
+	TextView ordFelt, bokstavFelt;
 	Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, Rb, S, T, U, V, W, X, Y, Z;
+	ImageButton muteKnapp;
+	ImageView imageHangman;
 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.spill);
+		
+		mediaPlayer = MediaPlayer.create(this, R.raw.riktig1);
+		imageHangman = (ImageView)findViewById(R.id.imageHangman);
+		
+		
+		muteKnapp = (ImageButton)findViewById(R.id.muteButton);
+		muteKnapp.setOnClickListener(new View.OnClickListener() {
+	    	@Override
+			public void onClick(View v) 
+			{
+	    		knappeLyd = MediaPlayer.create(Spill.this, R.raw.knapplyd);
+	    		knappeLyd.start();
+	    		
+	    		if(!muteKnapp.isSelected())
+	    		{
+	    			mediaPlayer.setVolume(0, 0);
+	    			muteKnapp.setSelected(true);
+	    			muteKnapp.setBackgroundResource(R.drawable.mute_1);
+	    			System.out.println("Lyd av.");
+	    			
+	    		}
+	    		else
+	    		{
+	    			mediaPlayer.setVolume(1, 1);
+	    			muteKnapp.setSelected(false);
+	    			muteKnapp.setBackgroundResource(R.drawable.mute_0);
+	    			System.out.println("Lyd på.");
+	    		}
+	    		
+	    		knappeLyd.stop();
+	        	knappeLyd.reset();
+	        	knappeLyd.release();
+	        	knappeLyd=null;
+			}
+	    });
 		
 		A = (Button) findViewById(R.id.bA);
 		B = (Button) findViewById(R.id.bB);
@@ -79,15 +118,15 @@ public class Spill extends Activity {
 		Y.setOnClickListener(onClickListener);
 		Z.setOnClickListener(onClickListener);
 		
-		tekst = (EditText) findViewById(R.id.editText1);
+		ordFelt = (TextView) findViewById(R.id.textRulesView);
+		bokstavFelt = (TextView) findViewById(R.id.textView2);
 		
-		riktigLyd1 = MediaPlayer.create(this, R.raw.riktig1);
-		riktigLyd2 = MediaPlayer.create(this, R.raw.riktig2);
-		riktigLyd3 = MediaPlayer.create(this, R.raw.riktig3);
-		riktigLyd4 = MediaPlayer.create(this, R.raw.riktig4);
-		riktigLyd5 = MediaPlayer.create(this, R.raw.riktig5);
-		riktigLyd6 = MediaPlayer.create(this, R.raw.riktig6);
-		vinnLyd = MediaPlayer.create(this, R.raw.vinn);
+		
+		
+		/* riktigLyd1.setOnCompletionListener(onCompletionListener); */
+		
+
+		
 		
 
 		nyttSpill();
@@ -101,7 +140,7 @@ public class Spill extends Activity {
 	
 	public void nyttSpill()
 	{
-		
+		bokstavString = " ";
 		feilGjettTeller = 0;
 		riktigGjettTeller = 0;
 		ferdigOrd = trekkOrd();
@@ -130,14 +169,15 @@ public class Spill extends Activity {
 			uferdigOrd.setCharAt(i, '_');
 			//System.out.println("I loop: " + uferdigOrd);
 		}
-		tekst.setText(uferdigOrd);
+		ordFelt.setText(uferdigOrd);
 		
 	}
 	
 	public void gjett(char a, Button s)
 	{
-		System.out.println("Ferdig ord: " + ferdigOrd);
-		System.out.println("Uferdig ord: " + uferdigOrd);
+		bokstavString += a + "  ";
+		bokstavFelt.setText(bokstavString);
+		
 		boolean riktigGjett = false;
 		s.setEnabled(false);
 		
@@ -150,57 +190,120 @@ public class Spill extends Activity {
 				riktigGjettTeller++;
 				System.out.println("Bokstaven " + a + " finnes i ordet!");
 				uferdigOrd.setCharAt(i, a);
-				tekst.setText(uferdigOrd);
+				ordFelt.setText(uferdigOrd);
 				s.setBackgroundResource(R.xml.rounded_green);
-				
-				if(uferdigOrd.equals(ferdigOrd))
-				{
-					spillFerdig();
-				}
 				
 				if(riktigGjettTeller >= 1)
 				{
 					switch(riktigGjettTeller){
 		            case 1:	
-		            	riktigLyd1.start();
+		            	mediaPlayer.reset();
+		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig1);
+		            	mediaPlayer.start();
 		            break;
 		            case 2:	
-		            	riktigLyd2.start();
+		            	mediaPlayer.stop();
+		            	mediaPlayer.reset();
+		            	mediaPlayer.release();
+		            	mediaPlayer = null;		            	
+		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig2);
+		            	mediaPlayer.start();
 		            break;
 		            case 3:	
-		            	riktigLyd3.start();
+		            	mediaPlayer.stop();
+		            	mediaPlayer.reset();
+		            	mediaPlayer.release();
+		            	mediaPlayer = null;		            	
+		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig3);
+		            	mediaPlayer.start();	            	
 		            break;
 		            case 4:	
-		            	riktigLyd4.start();
+		            	mediaPlayer.stop();
+		            	mediaPlayer.reset();
+		            	mediaPlayer.release();
+		            	mediaPlayer = null;		            	
+		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig4);
+		            	mediaPlayer.start();
 		            break;
 		            case 5:	
-		            	riktigLyd5.start();
+		            	mediaPlayer.stop();
+		            	mediaPlayer.reset();
+		            	mediaPlayer.release();
+		            	mediaPlayer = null;		            	
+		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig5);
+		            	mediaPlayer.start();
 		            break;
 		            case 6:	
-		            	riktigLyd6.start();
+		            	mediaPlayer.stop();
+		            	mediaPlayer.reset();
+		            	mediaPlayer.release();
+		            	mediaPlayer = null;		            	
+		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig6);
+		            	mediaPlayer.start();
 		            break;
 					}
 				}
 				else
-					riktigLyd6.start();
+				{
+	            	mediaPlayer.stop();
+	            	mediaPlayer.reset();
+	            	mediaPlayer.release();
+	            	mediaPlayer = null;		            	
+	            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig6);
+	            	mediaPlayer.start();
+				}
+				
+				if(ferdigOrd.toString().equals(uferdigOrd.toString()))
+				{
+	            	mediaPlayer.stop();
+	            	mediaPlayer.reset();
+	            	mediaPlayer.release();
+	            	mediaPlayer = null;	
+	            	
+					System.out.println("DU VANT!");
+					spillFerdig();
+				}
 			}
 		}
 		
 		if(riktigGjett == false)
 		{
-			// Kode for å vise bokstav som var feil, samt tegne hangman
-			// feilGjett();
 			feilGjettTeller++;
 			System.out.println(feilGjettTeller);
 			s.setBackgroundResource(R.xml.rounded_red);
-		}
-		
-		if(feilGjettTeller == 6)
-		{
-			// jalla balla
 			
-			System.out.println("Avslutter spill");
-			finish();
+        	mediaPlayer.stop();
+        	mediaPlayer.reset();
+        	mediaPlayer.release();
+        	mediaPlayer = null;		            	
+        	mediaPlayer = MediaPlayer.create(this, R.raw.feil);
+        	mediaPlayer.start();
+        	
+        	switch(feilGjettTeller)
+        	{
+        	case 1:
+        		imageHangman.setImageResource(R.drawable.h1);
+        		imageHangman.setVisibility(View.VISIBLE);
+            break;
+        	case 2:
+        		imageHangman.setImageResource(R.drawable.h2);
+            break;
+        	case 3:
+        		imageHangman.setImageResource(R.drawable.h3);
+            break;
+        	case 4:
+        		imageHangman.setImageResource(R.drawable.h4);
+            break;
+        	case 5:
+        		imageHangman.setImageResource(R.drawable.h5);
+            break;
+        	case 6:
+        		imageHangman.setImageResource(R.drawable.h6);
+				System.out.println("Avslutter spill");
+				finish();
+            break;
+            
+        	}
 		}
 		
 	}
@@ -213,11 +316,14 @@ public class Spill extends Activity {
 	}
 	
 	public void spillFerdig()
-	{
-		vinnLyd.start();
+	{            	
+    	mediaPlayer = MediaPlayer.create(this, R.raw.vinn);
+    	mediaPlayer.start();
+    	
+		finish();
 		Intent openStartskjerm = new Intent("com.example.hangman.STARTSKJERM");
 		startActivity(openStartskjerm);
-		finish();
+		
 	}
 	
 	private OnClickListener onClickListener = new OnClickListener() {
@@ -315,7 +421,44 @@ public class Spill extends Activity {
 	         }
 
 	   }
+		 
 	};
+	
+	
+	
+ /*   private OnCompletionListener onCompletionListener = new OnCompletionListener() 
+    {
+    	public void onCompletion(MediaPlayer mediaPlayer)
+    	{
+    		switch(mediaPlayer){
+            case R.raw.vinn:
+                 vinnLyd.release();
+            break;
+            case R.raw.riktig1:
+                riktigLyd1.release();
+            break;
+            case R.raw.riktig2:
+                riktigLyd2.release();
+            break;
+            case R.raw.riktig3:
+                riktigLyd3.release();
+            break;      
+            case R.raw.riktig4:
+                riktigLyd4.release();
+            break;
+            case R.raw.riktig5:
+                riktigLyd5.release();
+            break;
+            case R.raw.riktig6:
+                riktigLyd6.release();
+            break;
+            case R.raw.feil:
+                feilLyd.release();
+            break;
+    		}
+    	}	
+    }; */
+    
 	
 	
 	
