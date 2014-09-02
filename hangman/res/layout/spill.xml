@@ -429,6 +429,8 @@
          android:layout_above="@+id/textRulesView"
          android:layout_alignLeft="@+id/linearLayout1"
          android:layout_alignParentRight="true"
+         android:text="fefee"
+         android:layout_centerHorizontal="true"
          android:textColor="#006600" />
 
      <ImageView

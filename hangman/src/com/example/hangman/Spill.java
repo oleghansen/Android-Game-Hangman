@@ -146,28 +146,11 @@ public class Spill extends Activity {
 		ferdigOrd = trekkOrd();
 		uferdigOrd = new StringBuilder();
 		
-    /*	System.out.println("Ferdig Før loop: " + ferdigOrd);
-		System.out.println("Uferdig Før loop: " + uferdigOrd);
-		
-		String input = ferdigOrd;
-	    String hjelpeord = "";
-		
-		for (int i = 0; i < input.length(); i++)
-		{
-			if(i > 0)
-			{
-				hjelpeord += " ";
-			}
-			hjelpeord += (input.charAt(i));
-			System.out.println("etter mellomrom: " + hjelpeord);
-		} */
-		
 		uferdigOrd.append(ferdigOrd);
 		
 		for(int i = 0; i < uferdigOrd.length(); i++)
 		{
 			uferdigOrd.setCharAt(i, '_');
-			//System.out.println("I loop: " + uferdigOrd);
 		}
 		ordFelt.setText(uferdigOrd);
 		

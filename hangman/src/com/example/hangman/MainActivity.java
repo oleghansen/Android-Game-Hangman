@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
         final Button startButton = (Button)findViewById(R.id.buttonStart);
         final Button rulesButton = (Button)findViewById(R.id.buttonRegler);
         final Button languageButton = (Button)findViewById(R.id.buttonSprak);
+        final Button quitButton = (Button)findViewById(R.id.buttonAvslutt);
         
         final ImageButton muteKnapp = (ImageButton)findViewById(R.id.muteButton);
         
@@ -80,9 +81,12 @@ public class MainActivity extends Activity {
 						try
 						{
 							sleep(0);
-							minSang.stop();
-				        	minSang.reset();
-				        	minSang.release();
+							if(minSang!=null)
+							{
+								minSang.stop();
+					        	minSang.reset();
+					        	minSang.release();
+							}
 						}
 						catch (InterruptedException e)
 						{
@@ -141,6 +145,66 @@ public class MainActivity extends Activity {
 				
 			}
 		});
+        
+        quitButton.setOnClickListener(new View.OnClickListener() {
+			
+    			@Override
+    			public void onClick(View v) 
+    			{
+    				knappeLyd = MediaPlayer.create(MainActivity.this, R.raw.knapplyd);
+    				knappeLyd.start();
+    				onDestroy();
+    			}
+    		});
+        
+        	
+        languageButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) 
+			{
+				knappeLyd = MediaPlayer.create(MainActivity.this, R.raw.knapplyd);
+				knappeLyd.start();
+				
+				Thread timer = new Thread()
+				{
+					public void run()
+					{
+						try
+						{
+							sleep(0);
+							if(minSang!=null)
+							{
+								minSang.stop();
+					        	minSang.reset();
+					        	minSang.release();
+							}
+						}
+						catch (InterruptedException e)
+						{
+							e.printStackTrace();
+						}
+						finally
+						{
+							
+							Intent startLanguageScreen = new Intent("com.example.hangman.LANG");
+							startActivity(startLanguageScreen);
+							
+						}
+					}
+				};
+				timer.start();
+				
+				
+				
+				
+			}
+		});
     }
+	@Override
+	protected void onDestroy() {
+			finish();
+		super.onDestroy();
+	}
 
 }

@@ -17,16 +17,6 @@ public final class R {
         public static final int abc_slide_out_top=0x7f040005;
     }
     public static final class array {
-        /**   <item>FJELL</item>  
-    <item>FLUESOPP</item>  
-    <item>MARGARIN</item>  
-    <item>OSTEPOP</item>
-    <item>TORUNN</item>  
-    <item>ENGEL</item>
-    <item>EVENTYR</item>  
-    <item>GALGE</item>  
-    <item>BORD</item>  
-         */
         public static final int ordArray=0x7f0e0000;
     }
     public static final class attr {
@@ -966,6 +956,7 @@ containing a value of this type.
          (such as screen margins) for screens with more than 820dp of available width. This
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
+ Default screen margins, per the Android Design guidelines. 
          */
         public static final int activity_horizontal_margin=0x7f0a0015;
         public static final int activity_vertical_margin=0x7f0a0016;
@@ -1101,10 +1092,13 @@ containing a value of this type.
         public static final int ic_hangman=0x7f02005f;
         public static final int ic_launcher=0x7f020060;
         public static final int ic_title=0x7f020061;
-        public static final int mute_0=0x7f020062;
-        public static final int mute_1=0x7f020063;
-        public static final int rules=0x7f020064;
-        public static final int titlehangman=0x7f020065;
+        public static final int lang_en=0x7f020062;
+        public static final int lang_no=0x7f020063;
+        public static final int languages=0x7f020064;
+        public static final int mute_0=0x7f020065;
+        public static final int mute_1=0x7f020066;
+        public static final int rules=0x7f020067;
+        public static final int titlehangman=0x7f020068;
     }
     public static final class id {
         public static final int action_bar=0x7f07001c;
@@ -1118,35 +1112,35 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f070016;
         public static final int action_menu_presenter=0x7f070017;
         public static final int action_mode_close_button=0x7f070024;
-        public static final int action_settings=0x7f070063;
+        public static final int action_settings=0x7f070066;
         public static final int activity_chooser_view_content=0x7f070025;
         public static final int always=0x7f07000b;
-        public static final int bA=0x7f07004f;
-        public static final int bB=0x7f070050;
-        public static final int bC=0x7f070051;
-        public static final int bD=0x7f070052;
-        public static final int bE=0x7f070053;
-        public static final int bF=0x7f070054;
-        public static final int bG=0x7f070055;
-        public static final int bH=0x7f070056;
-        public static final int bI=0x7f070057;
-        public static final int bJ=0x7f070058;
-        public static final int bK=0x7f070059;
-        public static final int bL=0x7f07005a;
-        public static final int bM=0x7f07005b;
-        public static final int bN=0x7f07005c;
-        public static final int bO=0x7f07005d;
-        public static final int bP=0x7f07005e;
-        public static final int bQ=0x7f07005f;
-        public static final int bR=0x7f070060;
-        public static final int bS=0x7f070046;
-        public static final int bT=0x7f070047;
-        public static final int bU=0x7f070048;
-        public static final int bV=0x7f070049;
-        public static final int bW=0x7f07004a;
-        public static final int bX=0x7f07004b;
-        public static final int bY=0x7f07004c;
-        public static final int bZ=0x7f07004d;
+        public static final int bA=0x7f070052;
+        public static final int bB=0x7f070053;
+        public static final int bC=0x7f070054;
+        public static final int bD=0x7f070055;
+        public static final int bE=0x7f070056;
+        public static final int bF=0x7f070057;
+        public static final int bG=0x7f070058;
+        public static final int bH=0x7f070059;
+        public static final int bI=0x7f07005a;
+        public static final int bJ=0x7f07005b;
+        public static final int bK=0x7f07005c;
+        public static final int bL=0x7f07005d;
+        public static final int bM=0x7f07005e;
+        public static final int bN=0x7f07005f;
+        public static final int bO=0x7f070060;
+        public static final int bP=0x7f070061;
+        public static final int bQ=0x7f070062;
+        public static final int bR=0x7f070063;
+        public static final int bS=0x7f070049;
+        public static final int bT=0x7f07004a;
+        public static final int bU=0x7f07004b;
+        public static final int bV=0x7f07004c;
+        public static final int bW=0x7f07004d;
+        public static final int bX=0x7f07004e;
+        public static final int bY=0x7f07004f;
+        public static final int bZ=0x7f070050;
         public static final int beginning=0x7f070011;
         public static final int buttonAvslutt=0x7f070040;
         public static final int buttonRegler=0x7f07003f;
@@ -1159,6 +1153,7 @@ containing a value of this type.
         public static final int disableHome=0x7f070008;
         public static final int dropdown=0x7f07000f;
         public static final int edit_query=0x7f070030;
+        public static final int enButton=0x7f070045;
         public static final int end=0x7f070013;
         public static final int expand_activities_button=0x7f070026;
         public static final int expanded_menu=0x7f07002c;
@@ -1167,17 +1162,19 @@ containing a value of this type.
         public static final int icon=0x7f07002a;
         public static final int ifRoom=0x7f07000a;
         public static final int image=0x7f070027;
-        public static final int imageHangman=0x7f070062;
+        public static final int imageHangman=0x7f070065;
         public static final int imageTitle=0x7f07003d;
         public static final int imageView1=0x7f070042;
-        public static final int linearLayout1=0x7f07004e;
-        public static final int linearLayout2=0x7f070045;
-        public static final int linearLayout3=0x7f070044;
+        public static final int langText=0x7f070044;
+        public static final int linearLayout1=0x7f070051;
+        public static final int linearLayout2=0x7f070048;
+        public static final int linearLayout3=0x7f070047;
         public static final int listMode=0x7f070001;
         public static final int list_item=0x7f070029;
         public static final int middle=0x7f070012;
         public static final int muteButton=0x7f07003e;
         public static final int never=0x7f070009;
+        public static final int noButton=0x7f070043;
         public static final int none=0x7f070010;
         public static final int normal=0x7f070000;
         public static final int progress_circular=0x7f070018;
@@ -1200,8 +1197,8 @@ containing a value of this type.
         public static final int split_action_bar=0x7f07001e;
         public static final int submit_area=0x7f070039;
         public static final int tabMode=0x7f070002;
-        public static final int textRulesView=0x7f070043;
-        public static final int textView2=0x7f070061;
+        public static final int textRulesView=0x7f070046;
+        public static final int textView2=0x7f070064;
         public static final int title=0x7f07002b;
         public static final int top_action_bar=0x7f070020;
         public static final int up=0x7f070021;
@@ -1259,10 +1256,11 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030016;
         public static final int abc_simple_decor=0x7f030017;
         public static final int activity_main=0x7f030018;
-        public static final int rules=0x7f030019;
-        public static final int spill=0x7f03001a;
-        public static final int startskjerm=0x7f03001b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
+        public static final int lang=0x7f030019;
+        public static final int rules=0x7f03001a;
+        public static final int spill=0x7f03001b;
+        public static final int startskjerm=0x7f03001c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class menu {
         public static final int main=0x7f0f0000;
@@ -1351,6 +1349,7 @@ containing a value of this type.
         public static final int title=0x7f0c0014;
         public static final int u=0x7f0c002a;
         public static final int v=0x7f0c002b;
+        public static final int velglang=0x7f0c0030;
         public static final int w=0x7f0c002c;
         public static final int x=0x7f0c002d;
         public static final int y=0x7f0c002e;
@@ -1377,9 +1376,20 @@ containing a value of this type.
         res/values-v11/styles.xml on API 14+ devices.
     
  API 14 theme customizations can go here. 
+
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    
+
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        
          */
         public static final int AppBaseTheme=0x7f0d008b;
         /**  Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+ Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0d008c;

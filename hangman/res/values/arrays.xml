@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>  
     <resources>  
     <string-array name="ordArray">  
-    <item>LEMPE</item>  
-    <item>LAMPA</item>  
-    <item>LEMPA</item>  
-    <item>ABCDE</item>  
-    <item>EDCBA</item>  
-    
-  <!--  <item>FJELL</item>  
-    <item>FLUESOPP</item>  
-    <item>MARGARIN</item>  
-    <item>OSTEPOP</item>
+    <item>GLUE</item>  
+    <item>LAMP</item>  
+    <item>WOLFPACK</item>  
+    <item>CHEF</item>  
+    <item>MUSTARD</item> 
+    <item>MOUNTAIN</item>  
+    <item>MUSHROOM</item>  
+    <item>BUTTER</item>  
+    <item>CHEESEDOODLE</item>
     <item>TORUNN</item>  
-    <item>ENGEL</item>
-    <item>EVENTYR</item>  
-    <item>GALGE</item>  
-    <item>BORD</item>  -->
+    <item>ANGEL</item>
+    <item>FAIRYTALE</item>  
+    <item>GUN</item>  
+    <item>TABLE</item>
+    <item>MAYONAISE</item>  
+    <item>CHEESE</item>
+    <item>FOX</item>  
+    <item>CLOCK</item>
+    <item>FLOWER</item>  
+    <item>CLOWN</item>  
+    <item>GNOME</item>
      </string-array> 
     </resources>
