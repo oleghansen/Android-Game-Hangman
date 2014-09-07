@@ -151,7 +151,10 @@ public class Spill extends Activity {
 		for(int i = 0; i < uferdigOrd.length(); i++)
 		{
 			uferdigOrd.setCharAt(i, '_');
+			i++;
 		}
+		System.out.println("Uferdig: " + uferdigOrd);
+		System.out.println("Ferdig: " + ferdigOrd);
 		ordFelt.setText(uferdigOrd);
 		
 	}

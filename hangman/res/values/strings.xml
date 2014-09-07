@@ -7,6 +7,7 @@
     <string name="start_game">Start game</string>
     <string name="regler">Rules</string>
     <string name="avslutt">Quit</string>
+    <string name="tilbake">Back</string>
     <string name="sprak">Choose language</string>
     <string name="title">Hangman</string>
     <string name="rules"> Welcome to Hangman Deluxe! When a new game begins, a new random word is generated. Your goal is to find out what the word is. To do so, you will have to guess what characters the word consists of. \n \n Click a character to guess. You only got 6 chances, so pick carefully. </string> 

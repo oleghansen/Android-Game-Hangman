@@ -55,7 +55,7 @@
               android:width="250dp" />
 
           <Button
-              android:id="@+id/buttonAvslutt"
+              android:id="@+id/buttonTilbake"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_above="@+id/muteButton"
@@ -72,7 +72,7 @@
               android:id="@+id/buttonSprak"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_above="@+id/buttonAvslutt"
+              android:layout_above="@+id/buttonTilbake"
               android:layout_alignLeft="@+id/buttonRegler"
               android:layout_marginBottom="18dp"
               android:background="@xml/rounded_green"

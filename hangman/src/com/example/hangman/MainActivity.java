@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
         final Button startButton = (Button)findViewById(R.id.buttonStart);
         final Button rulesButton = (Button)findViewById(R.id.buttonRegler);
         final Button languageButton = (Button)findViewById(R.id.buttonSprak);
-        final Button quitButton = (Button)findViewById(R.id.buttonAvslutt);
+        final Button quitButton = (Button)findViewById(R.id.buttonTilbake);
         
         final ImageButton muteKnapp = (ImageButton)findViewById(R.id.muteButton);
         

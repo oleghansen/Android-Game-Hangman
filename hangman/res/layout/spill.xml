@@ -126,16 +126,6 @@
              android:textColor="#FFFFFF"
              android:textSize="20sp"
              android:width="35dp" />
-         
-              <ImageButton
-              android:id="@+id/muteButton"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentBottom="true"
-              android:layout_alignParentRight="true"
-              android:background="@null"
-              android:src="@drawable/mute_0"
-              android:state_selected="true" />
      </LinearLayout>
 
      <LinearLayout
@@ -429,7 +419,6 @@
          android:layout_above="@+id/textRulesView"
          android:layout_alignLeft="@+id/linearLayout1"
          android:layout_alignParentRight="true"
-         android:text="fefee"
          android:layout_centerHorizontal="true"
          android:textColor="#006600" />
 
