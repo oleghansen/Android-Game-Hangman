@@ -1,7 +1,10 @@
 package com.example.hangman;
 
 import java.util.Random;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -11,17 +14,19 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Spill extends Activity {
     
-	MediaPlayer mediaPlayer, knappeLyd;
-	StringBuilder uferdigOrd;
-	String ferdigOrd, bokstavString;
-	int feilGjettTeller, riktigGjettTeller;
-	TextView ordFelt, bokstavFelt;
-	Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, Rb, S, T, U, V, W, X, Y, Z;
-	ImageButton muteKnapp;
-	ImageView imageHangman;
+	private MediaPlayer mediaPlayer, knappeLyd;
+	private StringBuilder uferdigOrd;
+	private String ferdigOrd, bokstavString;
+	private int feilGjettTeller, riktigGjettTeller;
+	private TextView ordFelt, bokstavFelt;
+	private Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, Rb, S, T, U, V, W, X, Y, Z;
+	//private ImageButton muteKnapp;
+	private ImageView imageHangman;
+	private AlertDialog.Builder dialogBuilder;
 
 	
 	@Override
@@ -33,7 +38,7 @@ public class Spill extends Activity {
 		imageHangman = (ImageView)findViewById(R.id.imageHangman);
 		
 		
-		muteKnapp = (ImageButton)findViewById(R.id.muteButton);
+	/*	muteKnapp = (ImageButton)findViewById(R.id.muteButton);
 		muteKnapp.setOnClickListener(new View.OnClickListener() {
 	    	@Override
 			public void onClick(View v) 
@@ -62,7 +67,7 @@ public class Spill extends Activity {
 	        	knappeLyd.release();
 	        	knappeLyd=null;
 			}
-	    });
+	    }); */
 		
 		A = (Button) findViewById(R.id.bA);
 		B = (Button) findViewById(R.id.bB);
@@ -136,6 +141,38 @@ public class Spill extends Activity {
 	protected void onPause() {
 		super.onPause();
 		finish();
+	}
+	
+	
+	
+	@Override
+	public void onBackPressed() 
+	{
+		avsluttDialog();
+	}
+
+	private void avsluttDialog()
+	{
+		//Variabler
+		dialogBuilder = new AlertDialog.Builder(this);
+		
+		//Process
+		dialogBuilder.setTitle(getString(R.string.dialogAvsluttTittel));
+		dialogBuilder.setMessage(getString(R.string.dialogAvslutt));
+		
+		dialogBuilder.setPositiveButton((getString(R.string.yes)), new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which)
+			{
+				Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_SHORT).show();
+				finish();
+			}
+		});
+		
+		dialogBuilder.setNegativeButton((getString(R.string.no)), null).show();
+		
+		//Output
+		AlertDialog dialogAvslutt = dialogBuilder.create();
 	}
 	
 	public void nyttSpill()
@@ -307,8 +344,6 @@ public class Spill extends Activity {
     	mediaPlayer.start();
     	
 		finish();
-		Intent openStartskjerm = new Intent("com.example.hangman.STARTSKJERM");
-		startActivity(openStartskjerm);
 		
 	}
 	

@@ -30,7 +30,7 @@
         android:cropToPadding="false"
         android:src="@drawable/ic_title" />
 
-          <ImageButton
+         <!--   <ImageButton
               android:id="@+id/muteButton"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -38,7 +38,21 @@
               android:layout_alignParentRight="true"
               android:background="@null"
               android:src="@drawable/mute_0"
-              android:state_selected="true" />
+              android:state_selected="true" /> -->
+
+          <Button
+              android:id="@+id/buttonSprak"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignLeft="@+id/buttonRegler"
+              android:layout_below="@+id/buttonRegler"
+              android:layout_marginTop="18dp"
+              android:background="@xml/rounded_green"
+              android:height="35dp"
+              android:minHeight="30dip"
+              android:text="@string/sprak"
+              android:textColor="#ffffff"
+              android:width="250dp" />
 
           <Button
               android:id="@+id/buttonRegler"
@@ -46,7 +60,7 @@
               android:layout_height="wrap_content"
               android:layout_alignLeft="@+id/buttonStart"
               android:layout_below="@+id/buttonStart"
-              android:layout_marginTop="31dp"
+              android:layout_marginTop="30dp"
               android:background="@xml/rounded_green"
               android:height="35dp"
               android:minHeight="30dp"
@@ -58,28 +72,14 @@
               android:id="@+id/buttonTilbake"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_above="@+id/muteButton"
+              android:layout_below="@+id/buttonSprak"
               android:layout_centerHorizontal="true"
-              android:layout_marginBottom="14dp"
+              android:layout_marginTop="24dp"
               android:background="@xml/rounded_red"
               android:height="30dp"
               android:minHeight="30dp"
               android:text="@string/avslutt"
               android:textColor="#ffffff"
               android:width="100dp" />
-
-          <Button
-              android:id="@+id/buttonSprak"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_above="@+id/buttonTilbake"
-              android:layout_alignLeft="@+id/buttonRegler"
-              android:layout_marginBottom="18dp"
-              android:background="@xml/rounded_green"
-              android:height="35dp"
-              android:minHeight="30dip"
-              android:text="@string/sprak"
-              android:textColor="#ffffff"
-              android:width="250dp" />
 
 </RelativeLayout>

@@ -1,18 +1,23 @@
 package com.example.hangman;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
 
-	MediaPlayer minSang, knappeLyd;
+	private MediaPlayer minSang, knappeLyd;
+	private AlertDialog.Builder dialogBuilder;
+	private Button startButton, rulesButton, languageButton, quitButton;
+	private ImageButton muteKnapp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,20 +25,16 @@ public class MainActivity extends Activity {
 
             minSang = MediaPlayer.create(MainActivity.this, R.raw.soundtrack);
             minSang.start();
+            
+	        startButton = (Button)findViewById(R.id.buttonStart);
+	        rulesButton = (Button)findViewById(R.id.buttonRegler);
+	        languageButton = (Button)findViewById(R.id.buttonSprak);
+	        quitButton = (Button)findViewById(R.id.buttonTilbake);
+	        
+             // muteKnapp = (ImageButton)findViewById(R.id.muteButton);
         
         
-
-    
-        
-        final Button startButton = (Button)findViewById(R.id.buttonStart);
-        final Button rulesButton = (Button)findViewById(R.id.buttonRegler);
-        final Button languageButton = (Button)findViewById(R.id.buttonSprak);
-        final Button quitButton = (Button)findViewById(R.id.buttonTilbake);
-        
-        final ImageButton muteKnapp = (ImageButton)findViewById(R.id.muteButton);
-        
-        
-        muteKnapp.setOnClickListener(new View.OnClickListener() {
+     /*   muteKnapp.setOnClickListener(new View.OnClickListener() {
         	@Override
 			public void onClick(View v) 
 			{
@@ -64,7 +65,7 @@ public class MainActivity extends Activity {
             	knappeLyd.release();
             	knappeLyd=null;
 			}
-        });
+        }); */
         
         startButton.setOnClickListener(new View.OnClickListener() {
 			
@@ -80,12 +81,21 @@ public class MainActivity extends Activity {
 					{
 						try
 						{
+							System.out.println(minSang.toString());
 							sleep(0);
 							if(minSang!=null)
 							{
 								minSang.stop();
 					        	minSang.reset();
 					        	minSang.release();
+					        	minSang = null;
+					            minSang = MediaPlayer.create(MainActivity.this, R.raw.soundtrack);
+					            minSang.start();
+							}
+							else
+							{
+					            minSang = MediaPlayer.create(MainActivity.this, R.raw.soundtrack);
+					            minSang.start();
 							}
 						}
 						catch (InterruptedException e)
@@ -173,12 +183,6 @@ public class MainActivity extends Activity {
 						try
 						{
 							sleep(0);
-							if(minSang!=null)
-							{
-								minSang.stop();
-					        	minSang.reset();
-					        	minSang.release();
-							}
 						}
 						catch (InterruptedException e)
 						{
@@ -203,8 +207,49 @@ public class MainActivity extends Activity {
     }
 	@Override
 	protected void onDestroy() {
-			finish();
+		android.os.Process.killProcess(android.os.Process.myPid());
 		super.onDestroy();
+	}
+	
+	@Override
+	public void onBackPressed() 
+	{
+		avsluttDialog();
+	}
+	
+	@Override
+	public void onResume()
+	    {  // After a pause OR at startup
+	    super.onResume();
+        startButton.setText(getString(R.string.start_game));
+        rulesButton.setText(getString(R.string.regler));
+        languageButton.setText(getString(R.string.sprak));
+        quitButton.setText(getString(R.string.avslutt));
+	     }
+
+	private void avsluttDialog()
+	{
+		//Variabler
+		dialogBuilder = new AlertDialog.Builder(this);
+		
+		//Process
+		dialogBuilder.setTitle(getString(R.string.dialogAvsluttTittel));
+		dialogBuilder.setMessage(getString(R.string.dialogAvsluttApp));
+		
+		dialogBuilder.setPositiveButton((getString(R.string.yes)), new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which)
+			{
+				Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_SHORT).show();
+				onDestroy();
+			}
+		});
+		
+		dialogBuilder.setNegativeButton((getString(R.string.no)), null).show();
+		
+		//Output
+		AlertDialog dialogAvslutt = dialogBuilder.create();
+		dialogAvslutt.show();
 	}
 
 }
