@@ -20,13 +20,15 @@ public class Spill extends Activity {
     
 	private MediaPlayer mediaPlayer, knappeLyd;
 	private StringBuilder uferdigOrd;
-	private String ferdigOrd, bokstavString;
+	private String ferdigOrd, bokstavString, tempMulti;
 	private int feilGjettTeller, riktigGjettTeller;
-	private TextView ordFelt, bokstavFelt;
+	public int poeng;
+	private TextView ordFelt, bokstavFelt, multiFelt, poengFelt;
 	private Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, Rb, S, T, U, V, W, X, Y, Z;
 	//private ImageButton muteKnapp;
 	private ImageView imageHangman;
 	private AlertDialog.Builder dialogBuilder;
+	boolean forrigeRett, fForrigeRett;
 
 	
 	@Override
@@ -124,7 +126,9 @@ public class Spill extends Activity {
 		Z.setOnClickListener(onClickListener);
 		
 		ordFelt = (TextView) findViewById(R.id.textRulesView);
-		bokstavFelt = (TextView) findViewById(R.id.textView2);
+		//bokstavFelt = (TextView) findViewById(R.id.textView2);
+		multiFelt = (TextView) findViewById(R.id.textMulti);
+		poengFelt = (TextView) findViewById(R.id.textPoeng);
 		
 		
 		
@@ -177,12 +181,14 @@ public class Spill extends Activity {
 	
 	public void nyttSpill()
 	{
+		forrigeRett = false;
+		fForrigeRett = false;
 		bokstavString = " ";
 		feilGjettTeller = 0;
 		riktigGjettTeller = 0;
+		poeng = 0;
 		ferdigOrd = trekkOrd();
-		uferdigOrd = new StringBuilder();
-		
+		uferdigOrd = new StringBuilder();	
 		uferdigOrd.append(ferdigOrd);
 		
 		for(int i = 0; i < uferdigOrd.length(); i++)
@@ -198,8 +204,8 @@ public class Spill extends Activity {
 	
 	public void gjett(char a, Button s)
 	{
-		bokstavString += a + "  ";
-		bokstavFelt.setText(bokstavString);
+	//	bokstavString += a + "  ";
+	//	bokstavFelt.setText(bokstavString);
 		
 		boolean riktigGjett = false;
 		s.setEnabled(false);
@@ -208,13 +214,37 @@ public class Spill extends Activity {
 		{
 			if (ferdigOrd.charAt(i) == a)
 			{
+				int hjelp = (1000 / (uferdigOrd.length() / 2));
+				
+				if(forrigeRett == true)
+				{
+					if(fForrigeRett==true)
+					{
+						poeng += (hjelp * 4);
+						visMultiplier("4x");
+					}
+					else
+					{
+						poeng += (hjelp * 2);
+						fForrigeRett=true;
+						visMultiplier("2x");
+					}
+				}
+				else
+				{
+					poeng += hjelp;
+				}
 				
 				riktigGjett = true;
 				riktigGjettTeller++;
 				System.out.println("Bokstaven " + a + " finnes i ordet!");
+				System.out.println("Poeng: " + poeng);
 				uferdigOrd.setCharAt(i, a);
 				ordFelt.setText(uferdigOrd);
+				poengFelt.setText(String.valueOf(poeng));
 				s.setBackgroundResource(R.xml.rounded_green);
+				forrigeRett = true;
+				
 				
 				if(riktigGjettTeller >= 1)
 				{
@@ -283,7 +313,7 @@ public class Spill extends Activity {
 	            	mediaPlayer.release();
 	            	mediaPlayer = null;	
 	            	
-					System.out.println("DU VANT!");
+					System.out.println("DU VANT! Poeng:" + poeng);
 					spillFerdig();
 				}
 			}
@@ -291,9 +321,12 @@ public class Spill extends Activity {
 		
 		if(riktigGjett == false)
 		{
+			forrigeRett=false;
+			fForrigeRett=false;
 			feilGjettTeller++;
 			System.out.println(feilGjettTeller);
 			s.setBackgroundResource(R.xml.rounded_red);
+			visMultiplier(" ");
 			
         	mediaPlayer.stop();
         	mediaPlayer.reset();
@@ -345,6 +378,19 @@ public class Spill extends Activity {
     	
 		finish();
 		
+	}
+	
+	public void visMultiplier(String multi)
+	{
+		if(forrigeRett == true)
+		{
+			multiFelt.setText(multi);
+			multiFelt.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			multiFelt.setVisibility(View.GONE);
+		}
 	}
 	
 	private OnClickListener onClickListener = new OnClickListener() {

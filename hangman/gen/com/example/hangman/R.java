@@ -1113,7 +1113,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f070016;
         public static final int action_menu_presenter=0x7f070017;
         public static final int action_mode_close_button=0x7f070024;
-        public static final int action_settings=0x7f070065;
+        public static final int action_settings=0x7f070067;
         public static final int activity_chooser_view_content=0x7f070025;
         public static final int always=0x7f07000b;
         public static final int bA=0x7f070051;
@@ -1163,7 +1163,7 @@ containing a value of this type.
         public static final int icon=0x7f07002a;
         public static final int ifRoom=0x7f07000a;
         public static final int image=0x7f070027;
-        public static final int imageHangman=0x7f070064;
+        public static final int imageHangman=0x7f070063;
         public static final int imageTitle=0x7f07003d;
         public static final int imageView1=0x7f070041;
         public static final int langText=0x7f070042;
@@ -1197,8 +1197,10 @@ containing a value of this type.
         public static final int split_action_bar=0x7f07001e;
         public static final int submit_area=0x7f070039;
         public static final int tabMode=0x7f070002;
+        public static final int textMulti=0x7f070065;
+        public static final int textPoeng=0x7f070066;
         public static final int textRulesView=0x7f070045;
-        public static final int textView2=0x7f070063;
+        public static final int textView2=0x7f070064;
         public static final int title=0x7f07002b;
         public static final int top_action_bar=0x7f070020;
         public static final int up=0x7f070021;

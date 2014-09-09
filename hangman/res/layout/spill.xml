@@ -412,7 +412,7 @@
          android:textScaleX="1.2"
          android:textSize="40sp" />
 
-     <TextView
+ <!--    <TextView
          android:id="@+id/textView2"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
@@ -420,7 +420,7 @@
          android:layout_alignLeft="@+id/linearLayout1"
          android:layout_alignParentRight="true"
          android:layout_centerHorizontal="true"
-         android:textColor="#006600" />
+         android:textColor="#006600" /> -->
 
      <ImageView
          android:id="@+id/imageHangman"
@@ -432,5 +432,27 @@
          android:paddingBottom="10dp"
          android:src="@drawable/h6"
          android:visibility="invisible" />
+
+     <TextView
+         android:id="@+id/textMulti"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/linearLayout1"
+         android:layout_alignParentTop="true"
+         android:layout_marginLeft="18dp"
+         android:layout_marginTop="42dp"
+         android:textAppearance="?android:attr/textAppearanceLarge"
+         android:textColor="#00CC00"
+         android:textSize="100sp" />
+
+     <TextView
+         android:id="@+id/textPoeng"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBottom="@+id/imageHangman"
+         android:layout_alignParentRight="true"
+         android:text="0"
+         android:textAppearance="?android:attr/textAppearanceMedium"
+         android:textColor="#FFFFFF" />
 
 </RelativeLayout>
