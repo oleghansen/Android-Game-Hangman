@@ -434,18 +434,6 @@
          android:visibility="invisible" />
 
      <TextView
-         android:id="@+id/textMulti"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/linearLayout1"
-         android:layout_alignParentTop="true"
-         android:layout_marginLeft="18dp"
-         android:layout_marginTop="42dp"
-         android:textAppearance="?android:attr/textAppearanceLarge"
-         android:textColor="#00CC00"
-         android:textSize="100sp" />
-
-     <TextView
          android:id="@+id/textPoeng"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
@@ -454,5 +442,15 @@
          android:text="0"
          android:textAppearance="?android:attr/textAppearanceMedium"
          android:textColor="#FFFFFF" />
+
+     <TextView
+         android:id="@+id/textMulti"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/textPoeng"
+         android:layout_alignParentRight="true"
+         android:textAppearance="?android:attr/textAppearanceLarge"
+         android:textColor="#00CC00"
+         android:textSize="20sp" />
 
 </RelativeLayout>

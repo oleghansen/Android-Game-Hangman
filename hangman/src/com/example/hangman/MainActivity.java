@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -18,6 +22,7 @@ public class MainActivity extends Activity {
 	private AlertDialog.Builder dialogBuilder;
 	private Button startButton, rulesButton, languageButton, quitButton;
 	private ImageButton muteKnapp;
+	private TextView highscoreFelt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,10 +31,13 @@ public class MainActivity extends Activity {
             minSang = MediaPlayer.create(MainActivity.this, R.raw.soundtrack);
             minSang.start();
             
+            highscoreFelt = (TextView)findViewById(R.id.textHighscore);
+            highscoreFelt.setText("Highscore: " + (String.valueOf(Spill.hiscore)));
 	        startButton = (Button)findViewById(R.id.buttonStart);
 	        rulesButton = (Button)findViewById(R.id.buttonRegler);
 	        languageButton = (Button)findViewById(R.id.buttonSprak);
 	        quitButton = (Button)findViewById(R.id.buttonTilbake);
+	        
 	        
              // muteKnapp = (ImageButton)findViewById(R.id.muteButton);
         
@@ -221,6 +229,8 @@ public class MainActivity extends Activity {
 	public void onResume()
 	    {  // After a pause OR at startup
 	    super.onResume();
+		savePrefs("HIGHSCORE", Spill.hiscore);
+	    highscoreFelt.setText("Highscore: " + (String.valueOf(Spill.hiscore)));
         startButton.setText(getString(R.string.start_game));
         rulesButton.setText(getString(R.string.regler));
         languageButton.setText(getString(R.string.sprak));
@@ -251,5 +261,17 @@ public class MainActivity extends Activity {
 		AlertDialog dialogAvslutt = dialogBuilder.create();
 		dialogAvslutt.show();
 	}
-
+	private void savePrefs(String key, int value)
+	{
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+		Editor edit = sp.edit();
+		edit.putInt(key, value);
+		edit.commit();
+	}
+	
+	private void loadPrefs()
+	{
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+		int hsValue = sp.getInt("HIGHSCORE", Spill.hiscore);
+	}
 }

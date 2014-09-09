@@ -1,17 +1,20 @@
 package com.example.hangman;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,9 +23,10 @@ public class Spill extends Activity {
     
 	private MediaPlayer mediaPlayer, knappeLyd;
 	private StringBuilder uferdigOrd;
-	private String ferdigOrd, bokstavString, tempMulti;
+	private String ferdigOrd, bokstavString, tempMulti, randomOrd;
+	private String[] ordTabell;
 	private int feilGjettTeller, riktigGjettTeller;
-	public int poeng;
+	public static int poeng, hiscore, riktigeOrd, ordTeller;
 	private TextView ordFelt, bokstavFelt, multiFelt, poengFelt;
 	private Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, Rb, S, T, U, V, W, X, Y, Z;
 	//private ImageButton muteKnapp;
@@ -130,14 +134,15 @@ public class Spill extends Activity {
 		multiFelt = (TextView) findViewById(R.id.textMulti);
 		poengFelt = (TextView) findViewById(R.id.textPoeng);
 		
-		
+		ordTabell = new String[5];
+		Arrays.fill(ordTabell, null);
 		
 		/* riktigLyd1.setOnCompletionListener(onCompletionListener); */
 		
 
 		
 		
-
+		poeng = 0;
 		nyttSpill();
 	}
 
@@ -186,7 +191,6 @@ public class Spill extends Activity {
 		bokstavString = " ";
 		feilGjettTeller = 0;
 		riktigGjettTeller = 0;
-		poeng = 0;
 		ferdigOrd = trekkOrd();
 		uferdigOrd = new StringBuilder();	
 		uferdigOrd.append(ferdigOrd);
@@ -200,6 +204,11 @@ public class Spill extends Activity {
 		System.out.println("Ferdig: " + ferdigOrd);
 		ordFelt.setText(uferdigOrd);
 		
+	}
+	
+	public int getHiscore()
+	{
+		return hiscore;
 	}
 	
 	public void gjett(char a, Button s)
@@ -314,7 +323,17 @@ public class Spill extends Activity {
 	            	mediaPlayer = null;	
 	            	
 					System.out.println("DU VANT! Poeng:" + poeng);
-					spillFerdig();
+					if(poeng > hiscore)
+					{
+						hiscore = poeng;
+						
+						spillFerdig();
+					}
+					else
+					{
+						spillFerdig();
+					}
+					
 				}
 			}
 		}
@@ -363,20 +382,89 @@ public class Spill extends Activity {
 		}
 		
 	}
-	
-	public String trekkOrd()
+	public void bestemOrd()
 	{
 		String[] ord = getResources().getStringArray(R.array.ordArray);
-		String randomOrd = ord[new Random().nextInt(ord.length)];
+		randomOrd = ord[new Random().nextInt(ord.length)];
+		
+		for(int i=0; i < ordTabell.length; i++)
+		{
+			if(Arrays.asList(ordTabell).contains(randomOrd))
+			{
+				System.out.println(randomOrd + " er allerede trekt");
+				break;
+			}
+			else if(ordTabell[i] == null)
+			{
+				ordTabell[i] = randomOrd;
+				ordTeller++;
+				return;
+			}
+		}
+		bestemOrd();
+	}
+	public String trekkOrd()
+	{
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" + (Arrays.toString(ordTabell)));
+		bestemOrd();
 		return randomOrd;
 	}
 	
 	public void spillFerdig()
-	{            	
+	{   
     	mediaPlayer = MediaPlayer.create(this, R.raw.vinn);
     	mediaPlayer.start();
+    	riktigeOrd++;
     	
-		finish();
+		Handler handler = new Handler(); 
+		handler.postDelayed(new Runnable() { 
+		   public void run() { 
+		    	if(ordTeller == 5)
+		    	{
+		    		finish();
+		    	}
+		    	else
+		    	{
+		    		imageHangman.setImageResource(R.drawable.h0);
+		    		tilbakestillKnapper();
+		    		nyttSpill();
+		    	}
+		   } 
+	    }, 3000); 
+    	
+
+		
+	}
+	
+	public void tilbakestillKnapper()
+	{
+		A.setBackgroundResource(R.xml.rounded_blue); A.setEnabled(true);
+		B.setBackgroundResource(R.xml.rounded_blue); B.setEnabled(true);
+		C.setBackgroundResource(R.xml.rounded_blue); C.setEnabled(true);
+		D.setBackgroundResource(R.xml.rounded_blue); D.setEnabled(true);
+		E.setBackgroundResource(R.xml.rounded_blue); E.setEnabled(true);
+		F.setBackgroundResource(R.xml.rounded_blue); F.setEnabled(true);
+		G.setBackgroundResource(R.xml.rounded_blue); G.setEnabled(true);
+		H.setBackgroundResource(R.xml.rounded_blue); H.setEnabled(true);
+		I.setBackgroundResource(R.xml.rounded_blue); I.setEnabled(true);
+		J.setBackgroundResource(R.xml.rounded_blue); J.setEnabled(true);
+		K.setBackgroundResource(R.xml.rounded_blue); K.setEnabled(true);
+		L.setBackgroundResource(R.xml.rounded_blue); L.setEnabled(true);
+		M.setBackgroundResource(R.xml.rounded_blue); M.setEnabled(true);
+		N.setBackgroundResource(R.xml.rounded_blue); N.setEnabled(true);
+		O.setBackgroundResource(R.xml.rounded_blue); O.setEnabled(true);
+		P.setBackgroundResource(R.xml.rounded_blue); P.setEnabled(true);
+		Q.setBackgroundResource(R.xml.rounded_blue); Q.setEnabled(true);
+		Rb.setBackgroundResource(R.xml.rounded_blue); Rb.setEnabled(true);
+		S.setBackgroundResource(R.xml.rounded_blue); S.setEnabled(true);
+		T.setBackgroundResource(R.xml.rounded_blue); T.setEnabled(true);
+		U.setBackgroundResource(R.xml.rounded_blue); U.setEnabled(true);
+		V.setBackgroundResource(R.xml.rounded_blue); V.setEnabled(true);
+		W.setBackgroundResource(R.xml.rounded_blue); W.setEnabled(true);
+		X.setBackgroundResource(R.xml.rounded_blue); X.setEnabled(true);
+		Y.setBackgroundResource(R.xml.rounded_blue); Y.setEnabled(true);
+		Z.setBackgroundResource(R.xml.rounded_blue); Z.setEnabled(true);
+		
 		
 	}
 	
