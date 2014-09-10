@@ -26,7 +26,7 @@ public class Spill extends Activity {
 	private String ferdigOrd, bokstavString, tempMulti, randomOrd;
 	private String[] ordTabell;
 	private int feilGjettTeller, riktigGjettTeller;
-	public static int poeng, hiscore, riktigeOrd, ordTeller;
+	public static int poeng, hiscore, nyHiscore, riktigeOrd, ordTeller;
 	private TextView ordFelt, bokstavFelt, multiFelt, poengFelt;
 	private Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, Rb, S, T, U, V, W, X, Y, Z;
 	//private ImageButton muteKnapp;

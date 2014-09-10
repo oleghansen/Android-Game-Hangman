@@ -1114,7 +1114,6 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f070016;
         public static final int action_menu_presenter=0x7f070017;
         public static final int action_mode_close_button=0x7f070024;
-        public static final int action_settings=0x7f070068;
         public static final int activity_chooser_view_content=0x7f070025;
         public static final int always=0x7f07000b;
         public static final int bA=0x7f070052;
@@ -1168,6 +1167,8 @@ containing a value of this type.
         public static final int imageTitle=0x7f07003d;
         public static final int imageView1=0x7f070042;
         public static final int langText=0x7f070043;
+        public static final int language_en=0x7f070069;
+        public static final int language_no=0x7f070068;
         public static final int linearLayout1=0x7f070051;
         public static final int linearLayout2=0x7f070048;
         public static final int linearLayout3=0x7f070047;
