@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:icon="@drawable/ic_hangman"
+    android:background="@drawable/hangman_sky"
+    tools:context="com.example.hangman.Rules" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="57dp"
+        android:src="@drawable/rules" />
+
+    <TextView
+        android:id="@+id/textRulesView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/imageView1"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="76dp"
+        android:text="@string/rules"
+        android:width="260dp" />
+
+    <Button
+        android:id="@+id/buttonTilbake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:background="@xml/rounded_red"
+        android:height="30dp"
+        android:minHeight="30dp"
+        android:text="@string/tilbake"
+        android:textColor="#ffffff"
+        android:width="100dp" />
+
+</RelativeLayout>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>  
+    <resources>  
+    <string-array name="ordArray">  
+    <item>L I M T U B E</item>  
+    <item>L A M P E</item>  
+    <item>U L V</item>  
+    <item>K O K K</item>  
+    <item>S E N N E P</item> 
+    <item>F J E L L</item>  
+    <item>F L U E</item>  
+    <item>B E N M A R G</item>  
+    <item>O S T E P O P</item>
+    <item>T O R U N N</item>  
+    <item>E N G E L</item>
+    <item>E V E N T Y R</item>  
+    <item>G A L G E</item>  
+    <item>B O R D</item>
+    <item>M A J O N E S</item>  
+    <item>O S T</item>
+    <item>K O P P</item>  
+    <item>K L O K K E</item>
+    <item>B L O M S T</item>  
+    <item>K L O V N</item>  
+    <item>N I S S E</item>
+     </string-array> 
+    </resources>

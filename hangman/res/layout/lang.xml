@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/hangman_sky"
+    android:icon="@drawable/ic_hangman"
+    tools:context="com.example.hangman.Lang" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="123dp"
+        android:src="@drawable/languages" />
+
+    <TextView
+        android:id="@+id/langText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="@string/velglang"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFFFFF"
+        android:textSize="10sp" />
+
+    <ImageButton
+        android:id="@+id/noButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/langText"
+        android:layout_alignTop="@+id/enButton"
+        android:layout_marginRight="37dp"
+        android:background="@null"
+        android:src="@drawable/lang_no" />
+
+    <Button
+        android:id="@+id/buttonTilbake"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        android:background="@xml/rounded_red"
+        android:height="30dp"
+        android:minHeight="30dp"
+        android:text="@string/tilbake"
+        android:textColor="#ffffff"
+        android:width="100dp" />
+
+    <ImageButton
+        android:id="@+id/enButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/langText"
+        android:layout_below="@+id/langText"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="21dp"
+        android:background="@null"
+        android:paddingBottom="12dp"
+        android:src="@drawable/lang_en" />
+
+</RelativeLayout>
