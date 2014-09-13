@@ -21,13 +21,13 @@ import android.widget.Toast;
 
 public class Spill extends Activity {
     
-	private MediaPlayer mediaPlayer, knappeLyd;
+	private MediaPlayer mediaPlayer;
 	private StringBuilder uferdigOrd;
-	private String ferdigOrd, bokstavString, tempMulti, randomOrd;
+	private String ferdigOrd, randomOrd;
 	private String[] ordTabell;
-	private int feilGjettTeller, riktigGjettTeller;
-	public static int poeng, hiscore, nyHiscore, riktigeOrd, ordTeller;
-	private TextView ordFelt, bokstavFelt, multiFelt, poengFelt;
+	private int feilGjettTeller, riktigGjettTeller, ordTeller;
+	public static int poeng, hiscore, nyHiscore, riktigeOrd, globOrdTeller, ordRiktigTeller, ordFeilTeller, spillTeller, spillVunnetTeller, spillTaptTeller;
+	private TextView ordFelt, multiFelt, poengFelt;
 	private Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, Rb, S, T, U, V, W, X, Y, Z;
 	//private ImageButton muteKnapp;
 	private ImageView imageHangman;
@@ -42,6 +42,7 @@ public class Spill extends Activity {
 		
 		mediaPlayer = MediaPlayer.create(this, R.raw.riktig1);
 		imageHangman = (ImageView)findViewById(R.id.imageHangman);
+		spillTeller++;
 		
 		
 	/*	muteKnapp = (ImageButton)findViewById(R.id.muteButton);
@@ -141,7 +142,7 @@ public class Spill extends Activity {
 		
 
 		
-		
+		ordTeller = 0;
 		poeng = 0;
 		nyttSpill();
 	}
@@ -188,7 +189,6 @@ public class Spill extends Activity {
 	{
 		forrigeRett = false;
 		fForrigeRett = false;
-		bokstavString = " ";
 		feilGjettTeller = 0;
 		riktigGjettTeller = 0;
 		ferdigOrd = trekkOrd();
@@ -259,7 +259,10 @@ public class Spill extends Activity {
 				{
 					switch(riktigGjettTeller){
 		            case 1:	
+		            	mediaPlayer.stop();
 		            	mediaPlayer.reset();
+		            	mediaPlayer.release();
+		            	mediaPlayer = null;	
 		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig1);
 		            	mediaPlayer.start();
 		            break;
@@ -321,12 +324,12 @@ public class Spill extends Activity {
 	            	mediaPlayer.reset();
 	            	mediaPlayer.release();
 	            	mediaPlayer = null;	
+	            	ordRiktigTeller++;
 	            	
 					System.out.println("DU VANT! Poeng:" + poeng);
 					if(poeng > hiscore)
 					{
 						hiscore = poeng;
-						
 						spillFerdig();
 					}
 					else
@@ -374,6 +377,14 @@ public class Spill extends Activity {
             break;
         	case 6:
         		imageHangman.setImageResource(R.drawable.h6);
+        		mediaPlayer.stop();
+            	mediaPlayer.reset();
+            	mediaPlayer.release();
+            	mediaPlayer = null;		            	
+            	mediaPlayer = MediaPlayer.create(this, R.raw.tapelyd);
+            	mediaPlayer.start();
+            	ordFeilTeller++;
+            	spillTaptTeller++;
 				System.out.println("Avslutter spill");
 				finish();
             break;
@@ -398,29 +409,41 @@ public class Spill extends Activity {
 			{
 				ordTabell[i] = randomOrd;
 				ordTeller++;
+				globOrdTeller++;
 				return;
 			}
 		}
 		bestemOrd();
 	}
+	
+	/* 
+	 * Resets the buttons appearance after a word is correctly guessed - ready for a new round. 
+	 */
+	
 	public String trekkOrd()
 	{
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" + (Arrays.toString(ordTabell)));
 		bestemOrd();
 		return randomOrd;
 	}
+	
+	
+	/* 
+	 * Finishes the round or initializes a new word (if under five words are guessed so far). 
+	 */
 	
 	public void spillFerdig()
 	{   
     	mediaPlayer = MediaPlayer.create(this, R.raw.vinn);
     	mediaPlayer.start();
     	riktigeOrd++;
+    	deaktiverKnapper();
     	
 		Handler handler = new Handler(); 
 		handler.postDelayed(new Runnable() { 
 		   public void run() { 
 		    	if(ordTeller == 5)
 		    	{
+		    		spillVunnetTeller++;
 		    		finish();
 		    	}
 		    	else
@@ -436,7 +459,10 @@ public class Spill extends Activity {
 		
 	}
 	
-	public void tilbakestillKnapper()
+	/* 
+	 * Resets the buttons appearance after a word is correctly guessed - ready for a new round. 
+	 */
+	private void tilbakestillKnapper()
 	{
 		A.setBackgroundResource(R.xml.rounded_blue); A.setEnabled(true);
 		B.setBackgroundResource(R.xml.rounded_blue); B.setEnabled(true);
@@ -463,12 +489,48 @@ public class Spill extends Activity {
 		W.setBackgroundResource(R.xml.rounded_blue); W.setEnabled(true);
 		X.setBackgroundResource(R.xml.rounded_blue); X.setEnabled(true);
 		Y.setBackgroundResource(R.xml.rounded_blue); Y.setEnabled(true);
-		Z.setBackgroundResource(R.xml.rounded_blue); Z.setEnabled(true);
-		
-		
+		Z.setBackgroundResource(R.xml.rounded_blue); Z.setEnabled(true);	
 	}
 	
-	public void visMultiplier(String multi)
+	
+	/* 
+	 * Makes sure no buttons are clickable at certain stages of the game.
+	 */
+	private void deaktiverKnapper()
+	{
+		A.setEnabled(false);
+		B.setEnabled(false);
+		C.setEnabled(false);
+		D.setEnabled(false);
+		E.setEnabled(false);
+		F.setEnabled(false);
+		G.setEnabled(false);
+		H.setEnabled(false);
+		I.setEnabled(false);
+		J.setEnabled(false);
+		K.setEnabled(false);
+		L.setEnabled(false);
+		M.setEnabled(false);
+		N.setEnabled(false);
+		O.setEnabled(false);
+		P.setEnabled(false);
+		Q.setEnabled(false);
+		Rb.setEnabled(false);
+		S.setEnabled(false);
+		T.setEnabled(false);
+		U.setEnabled(false);
+		V.setEnabled(false);
+		W.setEnabled(false);
+		X.setEnabled(false);
+		Y.setEnabled(false);
+		Z.setEnabled(false);	
+	}
+	
+	
+	/* 
+	 * Shows a point multiplier on the screen when the player guesses multiple correct letters in a row.
+	 */
+	private void visMultiplier(String multi)
 	{
 		if(forrigeRett == true)
 		{
@@ -481,6 +543,10 @@ public class Spill extends Activity {
 		}
 	}
 	
+	
+	/* 
+	 * Button listener for the character-buttons.
+	 */
 	private OnClickListener onClickListener = new OnClickListener() {
 		 @Override
 	     public void onClick(View v) 
@@ -578,44 +644,4 @@ public class Spill extends Activity {
 	   }
 		 
 	};
-	
-	
-	
- /*   private OnCompletionListener onCompletionListener = new OnCompletionListener() 
-    {
-    	public void onCompletion(MediaPlayer mediaPlayer)
-    	{
-    		switch(mediaPlayer){
-            case R.raw.vinn:
-                 vinnLyd.release();
-            break;
-            case R.raw.riktig1:
-                riktigLyd1.release();
-            break;
-            case R.raw.riktig2:
-                riktigLyd2.release();
-            break;
-            case R.raw.riktig3:
-                riktigLyd3.release();
-            break;      
-            case R.raw.riktig4:
-                riktigLyd4.release();
-            break;
-            case R.raw.riktig5:
-                riktigLyd5.release();
-            break;
-            case R.raw.riktig6:
-                riktigLyd6.release();
-            break;
-            case R.raw.feil:
-                feilLyd.release();
-            break;
-    		}
-    	}	
-    }; */
-    
-	
-	
-	
-
 }

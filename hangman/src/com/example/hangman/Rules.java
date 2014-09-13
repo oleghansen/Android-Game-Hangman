@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Rules extends Activity {
 
-	Button tilbakeKnapp;
+	private Button tilbakeKnapp;
+	private TextView txtShow;
+	private ImageView regelLapp;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +22,15 @@ public class Rules extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.rules);
 		
-		final TextView txtShow = (TextView) findViewById (R.id.textRulesView);
-		tilbakeKnapp = (Button) findViewById(R.id.buttonTilbake);
-		
+		txtShow = (TextView) findViewById (R.id.textRulesView);
+		regelLapp = (ImageView)findViewById (R.id.imageView1);
+		tilbakeKnapp = (Button) findViewById(R.id.buttonTilbake);	
 		tilbakeKnapp.setOnClickListener(onClickListener);
 		
-		txtShow.startAnimation(AnimationUtils.loadAnimation(Rules.this, android.R.anim.slide_in_left));
+		Animation fadeIn = AnimationUtils.loadAnimation(Rules.this, android.R.anim.fade_in);
+		fadeIn.setDuration(3000);
+		txtShow.startAnimation(fadeIn);
+		regelLapp.startAnimation(fadeIn);
 		
 	}
 	

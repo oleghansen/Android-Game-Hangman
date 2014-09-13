@@ -50,7 +50,7 @@
               android:background="@xml/rounded_green"
               android:height="35dp"
               android:minHeight="30dip"
-              android:text="@string/sprak"
+              android:text="@string/statistikk"
               android:textColor="#ffffff"
               android:width="250dp" />
 

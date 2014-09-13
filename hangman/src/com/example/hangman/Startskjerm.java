@@ -2,9 +2,12 @@ package com.example.hangman;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 public class Startskjerm extends Activity {
+	
+	private MediaPlayer startLyd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -12,13 +15,16 @@ public class Startskjerm extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.startskjerm);
 		
+		startLyd = MediaPlayer.create(Startskjerm.this, R.raw.startskjermlyd);
+		
 		Thread timer = new Thread()
 		{
 			public void run()
 			{
 				try
 				{
-					sleep(1000);
+					startLyd.start();
+					sleep(3000);
 				}
 				catch (InterruptedException e)
 				{
@@ -26,6 +32,11 @@ public class Startskjerm extends Activity {
 				}
 				finally
 				{
+					
+					startLyd.stop();
+					startLyd.reset();
+					startLyd.release();
+		        	startLyd = null;
 					Intent openStartskjerm = new Intent("com.example.hangman.STARTSKJERM");
 					startActivity(openStartskjerm);
 				}
