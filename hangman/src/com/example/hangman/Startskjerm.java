@@ -2,6 +2,7 @@ package com.example.hangman;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -50,6 +51,12 @@ public class Startskjerm extends Activity {
 		super.onPause();
 		finish();
 	}
+	
+	@Override
+    public void onConfigurationChanged(Configuration newConfig){
+        super.onConfigurationChanged(newConfig);
+        setContentView(R.layout.startskjerm);
+    }
 	
 
 }

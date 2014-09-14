@@ -4,6 +4,7 @@ package com.example.hangman;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -18,7 +19,7 @@ import android.widget.TextView;
 public class Stats extends Activity {
 
 	
-	private TextView tittel, antSpillTxt, antOrdTxt, antSpillVunnetTxt, antSpillTaptTxt, antOrdRiktigTxt, antOrdFeilTxt;
+	private TextView tittel, highscoreTxt, antSpillTxt, antOrdTxt, antSpillVunnetTxt, antSpillTaptTxt, antOrdRiktigTxt, antOrdFeilTxt;
 	private Button tilbakeKnapp;
 	private Animation fadeIn;
 	
@@ -36,6 +37,7 @@ public class Stats extends Activity {
 		antOrdRiktigTxt = (TextView)findViewById(R.id.inAntallOrdRiktig);
 		antOrdFeilTxt = (TextView)findViewById(R.id.inAntallOrdFeil);
 		tilbakeKnapp = (Button)findViewById(R.id.buttonTilbake);
+		highscoreTxt = (TextView)findViewById(R.id.inHighscore);
 		
 		
 		// Animasjoner ----------------------------------
@@ -50,6 +52,7 @@ public class Stats extends Activity {
 		antOrdTxt.startAnimation(fadeIn);
 		antOrdRiktigTxt.startAnimation(fadeIn);
 		antOrdFeilTxt.startAnimation(fadeIn);
+		highscoreTxt.startAnimation(fadeIn);
 		
 		//------------------------------------------------
 		
@@ -68,6 +71,7 @@ public class Stats extends Activity {
 		int spillTapt = sp.getInt("SPILLTAPT", 0);
 		int ordRiktig = sp.getInt("ORDRIKTIG", 0);
 		int ordFeil = sp.getInt("ORDFEIL", 0);
+		int highscore = sp.getInt("NYHIGHSCORE", 0);
 		
 		antSpillTxt.setText(getString(R.string.antallspill) + ": " + String.valueOf(spillTeller));
 		antOrdTxt.setText(getString(R.string.antallord) + ": " + String.valueOf(ordTeller));
@@ -75,6 +79,7 @@ public class Stats extends Activity {
 		antSpillTaptTxt.setText(getString(R.string.tapt) + ": " + String.valueOf(spillTapt) + " (" + lagProsent(spillTeller, spillTapt) + "%)");
 		antOrdRiktigTxt.setText(getString(R.string.riktig) + ": " + String.valueOf(ordRiktig) + " (" + lagProsent(ordTeller, ordRiktig) + "%)");
 		antOrdFeilTxt.setText(getString(R.string.feil) + ": " + String.valueOf(ordFeil) + " (" + lagProsent(ordTeller, ordFeil) + "%)");
+		highscoreTxt.setText("Highscore: " + String.valueOf(highscore));
 	}
 	
 	private double lagProsent(int total, int a)
@@ -108,6 +113,25 @@ public class Stats extends Activity {
 		super.onPause();
 		finish();
 	}
+	
+	@Override
+    public void onConfigurationChanged(Configuration newConfig){
+        super.onConfigurationChanged(newConfig);
+        setContentView(R.layout.stats);
+        
+		tittel = (TextView)findViewById(R.id.textTittel);
+		antSpillTxt = (TextView)findViewById(R.id.inAntallSpill);
+		antOrdTxt = (TextView)findViewById(R.id.inAntallOrd);
+		antSpillVunnetTxt = (TextView)findViewById(R.id.inAntallSpillVunnet);
+		antSpillTaptTxt = (TextView)findViewById(R.id.inAntallSpillTapt);
+		antOrdRiktigTxt = (TextView)findViewById(R.id.inAntallOrdRiktig);
+		antOrdFeilTxt = (TextView)findViewById(R.id.inAntallOrdFeil);
+		tilbakeKnapp = (Button)findViewById(R.id.buttonTilbake);
+		highscoreTxt = (TextView)findViewById(R.id.inHighscore);
+        
+		tilbakeKnapp.setOnClickListener(onClickListener);
+		loadPrefs();
+    }
 	
 	@Override
 	public void onBackPressed() 

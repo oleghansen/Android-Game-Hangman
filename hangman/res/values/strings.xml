@@ -25,7 +25,7 @@
     <string name="title">Hangman</string>
     <string name="dialogAvslutt">Are you sure you want to quit?</string>
     <string name="dialogAvsluttTittel">Quit?</string>
-    <string name="rules"> Welcome to Hangman Deluxe! When a new game begins, a new random word is generated. Your goal is to find out what the word is. To do so, you will have to guess what characters the word consists of. \n \n Click a character to guess. You only got 6 chances, so pick carefully. </string> 
+    <string name="rules"> Welcome to Hangman Deluxe! When a new game begins, a new random word is generated. Your goal is to find out what the word is. To do so, you will have to guess what characters the word consists of. \n \n Click a character to guess. You only got 8 chances, so pick carefully. </string> 
     <string name="a">A</string>
     <string name="b">B</string>
     <string name="c">C</string>

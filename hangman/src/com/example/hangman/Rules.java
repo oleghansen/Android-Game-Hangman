@@ -1,6 +1,7 @@
 package com.example.hangman;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -47,6 +48,17 @@ public class Rules extends Activity {
 		super.onPause();
 		finish();
 	}
+	
+	@Override
+    public void onConfigurationChanged(Configuration newConfig){
+        super.onConfigurationChanged(newConfig);
+        setContentView(R.layout.rules);
+        
+		txtShow = (TextView) findViewById (R.id.textRulesView);
+		regelLapp = (ImageView)findViewById (R.id.imageView1);
+		tilbakeKnapp = (Button) findViewById(R.id.buttonTilbake);	
+		tilbakeKnapp.setOnClickListener(onClickListener);
+    }
 	
 	@Override
 	public void onBackPressed() 

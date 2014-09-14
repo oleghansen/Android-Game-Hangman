@@ -17,7 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +32,9 @@ public class MainActivity extends Activity {
 	private Button startButton, rulesButton, languageButton, quitButton;
 	private TextView highscoreFelt;
 	private Locale myLocale;
+	private ImageView imageHangman;
 	public static int nyHiscore;
+	private Animation fadeIn, tittelAnim;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,8 @@ public class MainActivity extends Activity {
 
             minSang = MediaPlayer.create(MainActivity.this, R.raw.soundtrack);
             minSang.start();
+            
+            imageHangman = (ImageView)findViewById(R.id.imageTitle);
             
             highscoreFelt = (TextView)findViewById(R.id.textHighscore);
             highscoreFelt.setOnClickListener(onClickListener);
@@ -53,6 +60,23 @@ public class MainActivity extends Activity {
 	        
 	        quitButton = (Button)findViewById(R.id.buttonTilbake);
 	        quitButton.setOnClickListener(onClickListener);
+	 
+	        
+			// Animasjoner ----------------------------------
+			
+			fadeIn = AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_in);
+			tittelAnim = AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_in_left);
+			tittelAnim.setDuration(2000);
+			fadeIn.setDuration(2000);
+			
+			imageHangman.setAnimation(tittelAnim);
+			highscoreFelt.startAnimation(fadeIn);
+			startButton.startAnimation(fadeIn);
+			rulesButton.startAnimation(fadeIn);
+			languageButton.startAnimation(fadeIn);
+			quitButton.startAnimation(fadeIn);
+			
+			//------------------------------------------------
     }
     
     private void restartMediaPlayer()
@@ -181,6 +205,35 @@ public class MainActivity extends Activity {
         languageButton.setText(getString(R.string.statistikk));
         quitButton.setText(getString(R.string.avslutt));
 	}
+	
+	/*
+	 *  This method makes handles the screen orientation. It makes sure all buttons are loaded and enabled. It also
+	 *  calls loadPrefs so the highscore field can be set.  This method is neccessary because when the screen orientation
+	 *  is changed, all the contents of the layout are redrawn and needs to be given properties in order to work. 
+	 */ 
+	@Override
+    public void onConfigurationChanged(Configuration newConfig){
+        super.onConfigurationChanged(newConfig);
+        setContentView(R.layout.activity_main);
+        
+        loadPrefs();
+        imageHangman = (ImageView)findViewById(R.id.imageTitle);
+        
+        highscoreFelt = (TextView)findViewById(R.id.textHighscore);
+        highscoreFelt.setOnClickListener(onClickListener);
+
+        startButton = (Button)findViewById(R.id.buttonStart);
+        startButton.setOnClickListener(onClickListener);
+        
+        rulesButton = (Button)findViewById(R.id.buttonRegler);
+        rulesButton.setOnClickListener(onClickListener);
+        
+        languageButton = (Button)findViewById(R.id.buttonSprak);
+        languageButton.setOnClickListener(onClickListener);
+        
+        quitButton = (Button)findViewById(R.id.buttonTilbake);
+        quitButton.setOnClickListener(onClickListener);
+    }
 	
 	@Override
 	public void onBackPressed() 

@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -76,59 +77,7 @@ public class Spill extends Activity {
 			}
 	    }); */
 		
-		A = (Button) findViewById(R.id.bA);
-		B = (Button) findViewById(R.id.bB);
-		C = (Button) findViewById(R.id.bC);
-		D = (Button) findViewById(R.id.bD);
-		E = (Button) findViewById(R.id.bE);
-		F = (Button) findViewById(R.id.bF);
-		G = (Button) findViewById(R.id.bG);
-		H = (Button) findViewById(R.id.bH);
-		I = (Button) findViewById(R.id.bI);
-		J = (Button) findViewById(R.id.bJ);
-		K = (Button) findViewById(R.id.bK);
-		L = (Button) findViewById(R.id.bL);
-		M = (Button) findViewById(R.id.bM);
-		N = (Button) findViewById(R.id.bN);
-		O = (Button) findViewById(R.id.bO);
-		P = (Button) findViewById(R.id.bP);
-		Q = (Button) findViewById(R.id.bQ);
-		Rb = (Button) findViewById(R.id.bR);
-		S = (Button) findViewById(R.id.bS);
-		T = (Button) findViewById(R.id.bT);
-		U = (Button) findViewById(R.id.bU);
-		V = (Button) findViewById(R.id.bV);
-		W = (Button) findViewById(R.id.bW);
-		X = (Button) findViewById(R.id.bX);
-		Y = (Button) findViewById(R.id.bY);
-		Z = (Button) findViewById(R.id.bZ);
-		
-		A.setOnClickListener(onClickListener);
-		B.setOnClickListener(onClickListener);
-		C.setOnClickListener(onClickListener);
-		D.setOnClickListener(onClickListener);
-		E.setOnClickListener(onClickListener);
-		F.setOnClickListener(onClickListener);
-		G.setOnClickListener(onClickListener);
-		H.setOnClickListener(onClickListener);
-		I.setOnClickListener(onClickListener);
-		J.setOnClickListener(onClickListener);
-		K.setOnClickListener(onClickListener);
-		L.setOnClickListener(onClickListener);
-		M.setOnClickListener(onClickListener);
-		N.setOnClickListener(onClickListener);
-		O.setOnClickListener(onClickListener);
-		P.setOnClickListener(onClickListener);
-		Q.setOnClickListener(onClickListener);
-		Rb.setOnClickListener(onClickListener);
-		S.setOnClickListener(onClickListener);
-		T.setOnClickListener(onClickListener);
-		U.setOnClickListener(onClickListener);
-		V.setOnClickListener(onClickListener);
-		W.setOnClickListener(onClickListener);
-		X.setOnClickListener(onClickListener);
-		Y.setOnClickListener(onClickListener);
-		Z.setOnClickListener(onClickListener);
+		deklarerKnapper();
 		
 		ordFelt = (TextView) findViewById(R.id.textRulesView);
 		//bokstavFelt = (TextView) findViewById(R.id.textView2);
@@ -223,27 +172,7 @@ public class Spill extends Activity {
 		{
 			if (ferdigOrd.charAt(i) == a)
 			{
-				int hjelp = (1000 / (uferdigOrd.length() / 2));
-				
-				if(forrigeRett == true)
-				{
-					if(fForrigeRett==true)
-					{
-						poeng += (hjelp * 4);
-						visMultiplier("4x");
-					}
-					else
-					{
-						poeng += (hjelp * 2);
-						fForrigeRett=true;
-						visMultiplier("2x");
-					}
-				}
-				else
-				{
-					poeng += hjelp;
-				}
-				
+				regnUtMultiplier();
 				riktigGjett = true;
 				riktigGjettTeller++;
 				System.out.println("Bokstaven " + a + " finnes i ordet!");
@@ -253,70 +182,7 @@ public class Spill extends Activity {
 				poengFelt.setText(String.valueOf(poeng));
 				s.setBackgroundResource(R.xml.rounded_green);
 				forrigeRett = true;
-				
-				
-				if(riktigGjettTeller >= 1)
-				{
-					switch(riktigGjettTeller){
-		            case 1:	
-		            	mediaPlayer.stop();
-		            	mediaPlayer.reset();
-		            	mediaPlayer.release();
-		            	mediaPlayer = null;	
-		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig1);
-		            	mediaPlayer.start();
-		            break;
-		            case 2:	
-		            	mediaPlayer.stop();
-		            	mediaPlayer.reset();
-		            	mediaPlayer.release();
-		            	mediaPlayer = null;		            	
-		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig2);
-		            	mediaPlayer.start();
-		            break;
-		            case 3:	
-		            	mediaPlayer.stop();
-		            	mediaPlayer.reset();
-		            	mediaPlayer.release();
-		            	mediaPlayer = null;		            	
-		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig3);
-		            	mediaPlayer.start();	            	
-		            break;
-		            case 4:	
-		            	mediaPlayer.stop();
-		            	mediaPlayer.reset();
-		            	mediaPlayer.release();
-		            	mediaPlayer = null;		            	
-		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig4);
-		            	mediaPlayer.start();
-		            break;
-		            case 5:	
-		            	mediaPlayer.stop();
-		            	mediaPlayer.reset();
-		            	mediaPlayer.release();
-		            	mediaPlayer = null;		            	
-		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig5);
-		            	mediaPlayer.start();
-		            break;
-		            case 6:	
-		            	mediaPlayer.stop();
-		            	mediaPlayer.reset();
-		            	mediaPlayer.release();
-		            	mediaPlayer = null;		            	
-		            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig6);
-		            	mediaPlayer.start();
-		            break;
-					}
-				}
-				else
-				{
-	            	mediaPlayer.stop();
-	            	mediaPlayer.reset();
-	            	mediaPlayer.release();
-	            	mediaPlayer = null;		            	
-	            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig6);
-	            	mediaPlayer.start();
-				}
+				spillRiktigLyd();
 				
 				if(ferdigOrd.toString().equals(uferdigOrd.toString()))
 				{
@@ -356,43 +222,147 @@ public class Spill extends Activity {
         	mediaPlayer = null;		            	
         	mediaPlayer = MediaPlayer.create(this, R.raw.feil);
         	mediaPlayer.start();
-        	
-        	switch(feilGjettTeller)
-        	{
-        	case 1:
-        		imageHangman.setImageResource(R.drawable.h1);
-        		imageHangman.setVisibility(View.VISIBLE);
+		
+        	tegnHangman();
+		}
+	}
+	
+	private void regnUtMultiplier()
+	{
+		int hjelp = (1000 / (uferdigOrd.length() / 2));
+		
+		if(forrigeRett == true)
+		{
+			if(fForrigeRett==true)
+			{
+				poeng += (hjelp * 4);
+				visMultiplier("4x");
+			}
+			else
+			{
+				poeng += (hjelp * 2);
+				fForrigeRett=true;
+				visMultiplier("2x");
+			}
+		}
+		else
+		{
+			poeng += hjelp;
+		}
+	}
+	
+	private void spillRiktigLyd()
+	{
+		if(riktigGjettTeller >= 1)
+		{
+			switch(riktigGjettTeller){
+            case 1:	
+            	mediaPlayer.stop();
+            	mediaPlayer.reset();
+            	mediaPlayer.release();
+            	mediaPlayer = null;	
+            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig1);
+            	mediaPlayer.start();
             break;
-        	case 2:
-        		imageHangman.setImageResource(R.drawable.h2);
-            break;
-        	case 3:
-        		imageHangman.setImageResource(R.drawable.h3);
-            break;
-        	case 4:
-        		imageHangman.setImageResource(R.drawable.h4);
-            break;
-        	case 5:
-        		imageHangman.setImageResource(R.drawable.h5);
-            break;
-        	case 6:
-        		imageHangman.setImageResource(R.drawable.h6);
-        		mediaPlayer.stop();
+            case 2:	
+            	mediaPlayer.stop();
             	mediaPlayer.reset();
             	mediaPlayer.release();
             	mediaPlayer = null;		            	
-            	mediaPlayer = MediaPlayer.create(this, R.raw.tapelyd);
+            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig2);
             	mediaPlayer.start();
-            	ordFeilTeller++;
-            	spillTaptTeller++;
+            break;
+            case 3:	
+            	mediaPlayer.stop();
+            	mediaPlayer.reset();
+            	mediaPlayer.release();
+            	mediaPlayer = null;		            	
+            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig3);
+            	mediaPlayer.start();	            	
+            break;
+            case 4:	
+            	mediaPlayer.stop();
+            	mediaPlayer.reset();
+            	mediaPlayer.release();
+            	mediaPlayer = null;		            	
+            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig4);
+            	mediaPlayer.start();
+            break;
+            case 5:	
+            	mediaPlayer.stop();
+            	mediaPlayer.reset();
+            	mediaPlayer.release();
+            	mediaPlayer = null;		            	
+            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig5);
+            	mediaPlayer.start();
+            break;
+            case 6:
+            	mediaPlayer.stop();
+            	mediaPlayer.reset();
+            	mediaPlayer.release();
+            	mediaPlayer = null;		            	
+            	mediaPlayer = MediaPlayer.create(this, R.raw.riktig6);
+            	mediaPlayer.start();
+            break;
+			}
+		}
+		else
+		{
+        	mediaPlayer.stop();
+        	mediaPlayer.reset();
+        	mediaPlayer.release();
+        	mediaPlayer = null;		            	
+        	mediaPlayer = MediaPlayer.create(this, R.raw.riktig6);
+        	mediaPlayer.start();
+		}
+	}
+	private void tegnHangman()
+	{
+		if(feilGjettTeller >= 1)
+		{
+			switch(feilGjettTeller)
+	    	{
+	    	case 1:
+	    		imageHangman.setImageResource(R.drawable.h1_0);
+	    		imageHangman.setVisibility(View.VISIBLE);
+	        break;
+	    	case 2:
+	    		imageHangman.setImageResource(R.drawable.h1_1);
+	        break;
+	    	case 3:
+	    		imageHangman.setImageResource(R.drawable.h1);
+	        break;
+	    	case 4:
+	    		imageHangman.setImageResource(R.drawable.h2);
+	        break;
+	    	case 5:
+	    		imageHangman.setImageResource(R.drawable.h3);
+	        break;
+	    	case 6:
+	    		imageHangman.setImageResource(R.drawable.h4);
+	        break;
+	    	case 7:
+	    		imageHangman.setImageResource(R.drawable.h5);
+	        break;
+	    	case 8:
+	    		imageHangman.setImageResource(R.drawable.h6);
+	    		mediaPlayer.stop();
+	        	mediaPlayer.reset();
+	        	mediaPlayer.release();
+	        	mediaPlayer = null;		            	
+	        	mediaPlayer = MediaPlayer.create(this, R.raw.tapelyd);
+	        	mediaPlayer.start();
+	        	ordFeilTeller++;
+	        	spillTaptTeller++;
 				System.out.println("Avslutter spill");
 				finish();
-            break;
-            
-        	}
+	        break;
+	        
+	    	}
 		}
 		
 	}
+	
 	public void bestemOrd()
 	{
 		String[] ord = getResources().getStringArray(R.array.ordArray);
@@ -644,4 +614,90 @@ public class Spill extends Activity {
 	   }
 		 
 	};
+	
+	private void deklarerKnapper()
+	{
+		A = (Button) findViewById(R.id.bA);
+		B = (Button) findViewById(R.id.bB);
+		C = (Button) findViewById(R.id.bC);
+		D = (Button) findViewById(R.id.bD);
+		E = (Button) findViewById(R.id.bE);
+		F = (Button) findViewById(R.id.bF);
+		G = (Button) findViewById(R.id.bG);
+		H = (Button) findViewById(R.id.bH);
+		I = (Button) findViewById(R.id.bI);
+		J = (Button) findViewById(R.id.bJ);
+		K = (Button) findViewById(R.id.bK);
+		L = (Button) findViewById(R.id.bL);
+		M = (Button) findViewById(R.id.bM);
+		N = (Button) findViewById(R.id.bN);
+		O = (Button) findViewById(R.id.bO);
+		P = (Button) findViewById(R.id.bP);
+		Q = (Button) findViewById(R.id.bQ);
+		Rb = (Button) findViewById(R.id.bR);
+		S = (Button) findViewById(R.id.bS);
+		T = (Button) findViewById(R.id.bT);
+		U = (Button) findViewById(R.id.bU);
+		V = (Button) findViewById(R.id.bV);
+		W = (Button) findViewById(R.id.bW);
+		X = (Button) findViewById(R.id.bX);
+		Y = (Button) findViewById(R.id.bY);
+		Z = (Button) findViewById(R.id.bZ);
+		
+		A.setOnClickListener(onClickListener);
+		B.setOnClickListener(onClickListener);
+		C.setOnClickListener(onClickListener);
+		D.setOnClickListener(onClickListener);
+		E.setOnClickListener(onClickListener);
+		F.setOnClickListener(onClickListener);
+		G.setOnClickListener(onClickListener);
+		H.setOnClickListener(onClickListener);
+		I.setOnClickListener(onClickListener);
+		J.setOnClickListener(onClickListener);
+		K.setOnClickListener(onClickListener);
+		L.setOnClickListener(onClickListener);
+		M.setOnClickListener(onClickListener);
+		N.setOnClickListener(onClickListener);
+		O.setOnClickListener(onClickListener);
+		P.setOnClickListener(onClickListener);
+		Q.setOnClickListener(onClickListener);
+		Rb.setOnClickListener(onClickListener);
+		S.setOnClickListener(onClickListener);
+		T.setOnClickListener(onClickListener);
+		U.setOnClickListener(onClickListener);
+		V.setOnClickListener(onClickListener);
+		W.setOnClickListener(onClickListener);
+		X.setOnClickListener(onClickListener);
+		Y.setOnClickListener(onClickListener);
+		Z.setOnClickListener(onClickListener);
+	}
+	@Override
+    public void onConfigurationChanged(Configuration newConfig){
+        super.onConfigurationChanged(newConfig);
+        setContentView(R.layout.spill);
+        
+		deklarerKnapper();
+		
+		ordFelt = (TextView) findViewById(R.id.textRulesView);
+		//bokstavFelt = (TextView) findViewById(R.id.textView2);
+		multiFelt = (TextView) findViewById(R.id.textMulti);
+		poengFelt = (TextView) findViewById(R.id.textPoeng);
+		imageHangman = (ImageView)findViewById(R.id.imageHangman);
+		ordFelt.setText(uferdigOrd);
+		poengFelt.setText(String.valueOf(poeng));
+		tegnHangman();
+		
+		if(forrigeRett == true)
+		{
+			if(fForrigeRett==true)
+			{
+				visMultiplier("4x");
+			}
+			else
+			{
+				visMultiplier("2x");
+			}
+		}
+		
+    }
 }
