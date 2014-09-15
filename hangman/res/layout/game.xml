@@ -430,7 +430,7 @@
          android:layout_alignParentLeft="true"
          android:layout_alignParentTop="true"
          android:paddingBottom="10dp"
-         android:src="@drawable/h6"
+         android:src="@drawable/h0"
          android:visibility="invisible" />
 
      <TextView

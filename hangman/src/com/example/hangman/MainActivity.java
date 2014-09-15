@@ -155,14 +155,14 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-  		nyHiscore = Spill.hiscore;
+  		nyHiscore = Game.hiscore;
   		savePrefs("NYHIGHSCORE", nyHiscore);
-  		savePrefs("ANTALLSPILL", Spill.spillTeller);
-  		savePrefs("SPILLVUNNET", Spill.spillVunnetTeller);
-  		savePrefs("SPILLTAPT", Spill.spillTaptTeller);
-  		savePrefs("ANTALLORD", Spill.globOrdTeller);
-  		savePrefs("ORDRIKTIG", Spill.ordRiktigTeller);
-  		savePrefs("ORDFEIL", Spill.ordFeilTeller); 
+  		savePrefs("ANTALLSPILL", Game.spillTeller);
+  		savePrefs("SPILLVUNNET", Game.spillVunnetTeller);
+  		savePrefs("SPILLTAPT", Game.spillTaptTeller);
+  		savePrefs("ANTALLORD", Game.globOrdTeller);
+  		savePrefs("ORDRIKTIG", Game.ordRiktigTeller);
+  		savePrefs("ORDFEIL", Game.ordFeilTeller); 
   		
 		android.os.Process.killProcess(android.os.Process.myPid());
 		
@@ -247,16 +247,16 @@ public class MainActivity extends Activity {
 		Log.d("MAINACTIVITY", "Er i onResume");
 	    super.onResume();	    
 	    
-  		savePrefs("ANTALLSPILL", Spill.spillTeller);
-  	    savePrefs("SPILLVUNNET", Spill.spillVunnetTeller);
-  		savePrefs("SPILLTAPT", Spill.spillTaptTeller);
-  		savePrefs("ANTALLORD", Spill.globOrdTeller);
-  		savePrefs("ORDRIKTIG", Spill.ordRiktigTeller);
-  		savePrefs("ORDFEIL", Spill.ordFeilTeller);
+  		savePrefs("ANTALLSPILL", Game.spillTeller);
+  	    savePrefs("SPILLVUNNET", Game.spillVunnetTeller);
+  		savePrefs("SPILLTAPT", Game.spillTaptTeller);
+  		savePrefs("ANTALLORD", Game.globOrdTeller);
+  		savePrefs("ORDRIKTIG", Game.ordRiktigTeller);
+  		savePrefs("ORDFEIL", Game.ordFeilTeller);
   		
-		  	if(Spill.hiscore > nyHiscore)
+		  	if(Game.hiscore > nyHiscore)
 		  	{
-		  		nyHiscore = Spill.hiscore;
+		  		nyHiscore = Game.hiscore;
 		  		savePrefs("NYHIGHSCORE", nyHiscore);
 		  		
 		  		System.out.println("HER SKAL DET LAGRES");

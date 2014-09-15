@@ -20,26 +20,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Spill extends Activity {
+public class Game extends Activity {
     
 	private MediaPlayer mediaPlayer;
 	private StringBuilder uferdigOrd;
-	private String ferdigOrd, randomOrd;
+	private String ferdigOrd, randomOrd, riktigBokstavString, feilBokstavString;
 	private String[] ordTabell;
 	private int feilGjettTeller, riktigGjettTeller, ordTeller;
 	public static int poeng, hiscore, nyHiscore, riktigeOrd, globOrdTeller, ordRiktigTeller, ordFeilTeller, spillTeller, spillVunnetTeller, spillTaptTeller;
 	private TextView ordFelt, multiFelt, poengFelt;
 	private Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, Rb, S, T, U, V, W, X, Y, Z;
+	private String[] alfabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "Rb", "S", "T", "U", "V", "W", "X", "Y", "Z"}; 
 	//private ImageButton muteKnapp;
 	private ImageView imageHangman;
 	private AlertDialog.Builder dialogBuilder;
 	boolean forrigeRett, fForrigeRett;
 
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {	
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.spill);
+		setContentView(R.layout.game);
 		
 		mediaPlayer = MediaPlayer.create(this, R.raw.riktig1);
 		imageHangman = (ImageView)findViewById(R.id.imageHangman);
@@ -86,6 +86,8 @@ public class Spill extends Activity {
 		
 		ordTabell = new String[5];
 		Arrays.fill(ordTabell, null);
+
+
 		
 		/* riktigLyd1.setOnCompletionListener(onCompletionListener); */
 		
@@ -136,6 +138,8 @@ public class Spill extends Activity {
 	
 	public void nyttSpill()
 	{
+		riktigBokstavString=""; //for orientation change
+		feilBokstavString=""; //for orientation change
 		forrigeRett = false;
 		fForrigeRett = false;
 		feilGjettTeller = 0;
@@ -162,7 +166,6 @@ public class Spill extends Activity {
 	
 	public void gjett(char a, Button s)
 	{
-	//	bokstavString += a + "  ";
 	//	bokstavFelt.setText(bokstavString);
 		
 		boolean riktigGjett = false;
@@ -172,6 +175,7 @@ public class Spill extends Activity {
 		{
 			if (ferdigOrd.charAt(i) == a)
 			{
+				riktigBokstavString += a;
 				regnUtMultiplier();
 				riktigGjett = true;
 				riktigGjettTeller++;
@@ -183,6 +187,8 @@ public class Spill extends Activity {
 				s.setBackgroundResource(R.xml.rounded_green);
 				forrigeRett = true;
 				spillRiktigLyd();
+				
+				
 				
 				if(ferdigOrd.toString().equals(uferdigOrd.toString()))
 				{
@@ -209,12 +215,14 @@ public class Spill extends Activity {
 		
 		if(riktigGjett == false)
 		{
+			feilBokstavString += a;
 			forrigeRett=false;
 			fForrigeRett=false;
 			feilGjettTeller++;
 			System.out.println(feilGjettTeller);
 			s.setBackgroundResource(R.xml.rounded_red);
 			visMultiplier(" ");
+			
 			
         	mediaPlayer.stop();
         	mediaPlayer.reset();
@@ -462,6 +470,16 @@ public class Spill extends Activity {
 		Z.setBackgroundResource(R.xml.rounded_blue); Z.setEnabled(true);	
 	}
 	
+	private void tegnRiktigeKnapper(Button s)
+	{
+		s.setBackgroundResource(R.xml.rounded_green); s.setEnabled(false);
+	}
+	
+	private void tegnFeilKnapper(Button s)
+	{
+		s.setBackgroundResource(R.xml.rounded_red); s.setEnabled(false);
+	}
+	
 	
 	/* 
 	 * Makes sure no buttons are clickable at certain stages of the game.
@@ -671,22 +689,29 @@ public class Spill extends Activity {
 		Y.setOnClickListener(onClickListener);
 		Z.setOnClickListener(onClickListener);
 	}
+	
+	/*
+	 * 
+	 * Method to handle orientation switching. Executes several operations neccesary for the game to behave
+	 * the way it should if the device and orientation is rotated.
+	 */
 	@Override
     public void onConfigurationChanged(Configuration newConfig){
         super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.spill);
-        
-		deklarerKnapper();
+        setContentView(R.layout.game);
+		imageHangman = (ImageView)findViewById(R.id.imageHangman);
+		imageHangman.setVisibility(View.VISIBLE);
 		
 		ordFelt = (TextView) findViewById(R.id.textRulesView);
-		//bokstavFelt = (TextView) findViewById(R.id.textView2);
 		multiFelt = (TextView) findViewById(R.id.textMulti);
 		poengFelt = (TextView) findViewById(R.id.textPoeng);
-		imageHangman = (ImageView)findViewById(R.id.imageHangman);
+
 		ordFelt.setText(uferdigOrd);
 		poengFelt.setText(String.valueOf(poeng));
-		tegnHangman();
 		
+		deklarerKnapper();
+		tegnHangman();
+
 		if(forrigeRett == true)
 		{
 			if(fForrigeRett==true)
@@ -699,5 +724,53 @@ public class Spill extends Activity {
 			}
 		}
 		
+		/* See comments above next method.
+		 */
+		tegnBrukteKnapper("A", A);
+		tegnBrukteKnapper("B", B);
+		tegnBrukteKnapper("C", C);
+		tegnBrukteKnapper("D", D);
+		tegnBrukteKnapper("E", E);
+		tegnBrukteKnapper("F", F);
+		tegnBrukteKnapper("G", G);
+		tegnBrukteKnapper("H", H);
+		tegnBrukteKnapper("I", I);
+		tegnBrukteKnapper("J", J);
+		tegnBrukteKnapper("K", K);
+		tegnBrukteKnapper("L", L);
+		tegnBrukteKnapper("M", M);
+		tegnBrukteKnapper("N", N);
+		tegnBrukteKnapper("O", O);
+		tegnBrukteKnapper("P", P);
+		tegnBrukteKnapper("Q", Q);
+		tegnBrukteKnapper("R", Rb);
+		tegnBrukteKnapper("S", S);
+		tegnBrukteKnapper("T", T);
+		tegnBrukteKnapper("U", U);
+		tegnBrukteKnapper("V", V);
+		tegnBrukteKnapper("W", W);
+		tegnBrukteKnapper("X", X);
+		tegnBrukteKnapper("Y", Y);
+		tegnBrukteKnapper("Z", Z);
+		
+		
     }
+	
+	/* This method's only purpose is to check whether a button is already used, and update it on orientation change.
+	 * I am really not proud of this way of keeping the buttons state on orientation change,
+	 * but i did not really find a better way to do it before deadline. I would definitely change this if I was
+	 * to develop it further.
+	 */
+	private void tegnBrukteKnapper(String st, Button bu)
+	{	
+			if(riktigBokstavString.contains(st))
+			{		
+				bu.setBackgroundResource(R.xml.rounded_green); bu.setEnabled(false);
+			}	
+			
+			else if(feilBokstavString.contains(st))
+			{
+				bu.setBackgroundResource(R.xml.rounded_red); bu.setEnabled(false);
+			}
+	}
 }
