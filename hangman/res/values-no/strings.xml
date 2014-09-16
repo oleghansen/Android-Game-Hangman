@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Hangman Deluxe</string>
+    <string name="app_name">Hangman</string>
     <string name="action_settings">Innstillinger</string>
     <string name="yes">Ja</string>
     <string name="no">Nei</string>
@@ -12,6 +12,9 @@
     <string name="statistikk">Spillstatistikk</string>
     <string name="avslutt">Avslutt</string>
     <string name="sprak">Velg språk</string>
+    <string name="beklager">Beklager!</string>
+    <string name="beklagertekst">Du klarte ikke gjette ordet. Ordet var: </string>
+    <string name="beklagertekst2">Vil du prøve igjen?</string>
     <string name="title">Hangman</string>
     <string name="riktig">Riktig</string>
     <string name="feil">Feil</string>
@@ -25,6 +28,7 @@
     <string name="tilbakestillstat">Tips: Dårlige resultater? Du kan nullstille statistikken ved å trykke på highscorefeltet over hovedmenyen.</string>
     <string name="tilbakestill">Tilbakestill</string>
         <string name="tilbakestillDialogTekst">Sikker på at du vil nullstille spillstatistikken? All din spillstatistikk vil gå tapt.</string>
+          <string name="dialogAvsluttSpill">Er du sikker på at du vil avslutte denne runden og gå til hovedmenyen? Det vil telles som tap i spillstatistikken.</string>
     <string name="rules"> Velkommen til Hangman Deluxe! Når du starter et nytt spill trekkes et tilfeldig ord. Ditt mål er å finne ut hvilket ord. For å gjøre det må du gjette hvilke bokstaver ordet består av.\n \n Trykk på en bokstav for å gjette. Du har bare 8 forsøk, så tenk deg godt om! </string> 
     <string name="a">A</string>
     <string name="b">B</string>

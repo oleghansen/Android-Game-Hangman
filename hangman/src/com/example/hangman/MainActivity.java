@@ -29,11 +29,12 @@ public class MainActivity extends Activity {
 
 	private MediaPlayer minSang, knappeLyd;
 	private AlertDialog.Builder dialogBuilder;
-	private Button startButton, rulesButton, languageButton, quitButton;
+	private Button startButton, rulesButton, languageButton;
 	private TextView highscoreFelt;
 	private Locale myLocale;
 	private ImageView imageHangman;
-	public static int nyHiscore;
+	private boolean byttetSprak;
+	public static int nyHiscore, nyspillTeller, nyspillVunnetTeller, nyspillTaptTeller, nyAntallOrdTeller, nyOrdRiktig, nyOrdFeil;
 	private Animation fadeIn, tittelAnim;
 	
     @Override
@@ -58,8 +59,7 @@ public class MainActivity extends Activity {
 	        languageButton = (Button)findViewById(R.id.buttonSprak);
 	        languageButton.setOnClickListener(onClickListener);
 	        
-	        quitButton = (Button)findViewById(R.id.buttonTilbake);
-	        quitButton.setOnClickListener(onClickListener);
+	        byttetSprak = false;
 	 
 	        
 			// Animasjoner ----------------------------------
@@ -74,7 +74,6 @@ public class MainActivity extends Activity {
 			startButton.startAnimation(fadeIn);
 			rulesButton.startAnimation(fadeIn);
 			languageButton.startAnimation(fadeIn);
-			quitButton.startAnimation(fadeIn);
 			
 			//------------------------------------------------
     }
@@ -142,9 +141,6 @@ public class MainActivity extends Activity {
 							Intent startLanguageScreen = new Intent("com.example.hangman.LANG");
 							startActivity(startLanguageScreen);
 	      	             break;
-	      	             case R.id.buttonTilbake:
-	        				onDestroy();
-	      	             break;
 	      	             case R.id.textHighscore:
 	      	            	 resetDialog();
 	      	             break;
@@ -155,17 +151,19 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-  		nyHiscore = Game.hiscore;
-  		savePrefs("NYHIGHSCORE", nyHiscore);
-  		savePrefs("ANTALLSPILL", Game.spillTeller);
-  		savePrefs("SPILLVUNNET", Game.spillVunnetTeller);
-  		savePrefs("SPILLTAPT", Game.spillTaptTeller);
-  		savePrefs("ANTALLORD", Game.globOrdTeller);
-  		savePrefs("ORDRIKTIG", Game.ordRiktigTeller);
-  		savePrefs("ORDFEIL", Game.ordFeilTeller); 
-  		
-		android.os.Process.killProcess(android.os.Process.myPid());
 		
+  		nyHiscore = Game.hiscore;
+  	    
+  		savePrefs("NYHIGHSCORE", nyHiscore);
+  		savePrefs("ANTALLSPILL", nyspillTeller);
+  		savePrefs("SPILLVUNNET", nyspillVunnetTeller);
+  		savePrefs("SPILLTAPT", nyspillTaptTeller);
+  		savePrefs("ANTALLORD", nyAntallOrdTeller);
+  		savePrefs("ORDRIKTIG", nyOrdRiktig);
+  		savePrefs("ORDFEIL", nyOrdFeil); 
+  		
+  		
+  		finish();
 	}
 	
 	
@@ -184,9 +182,13 @@ public class MainActivity extends Activity {
 		{
 		case R.id.language_no:
 			changeLang("no_NO");
+			byttetSprak = true;
 		break;
 		case R.id.language_en:
 		changeLang("en_EN");
+		break;
+		case R.id.exit:
+			avsluttDialog();
 		break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -203,7 +205,6 @@ public class MainActivity extends Activity {
         startButton.setText(getString(R.string.start_game));
         rulesButton.setText(getString(R.string.regler));
         languageButton.setText(getString(R.string.statistikk));
-        quitButton.setText(getString(R.string.avslutt));
 	}
 	
 	/*
@@ -231,8 +232,11 @@ public class MainActivity extends Activity {
         languageButton = (Button)findViewById(R.id.buttonSprak);
         languageButton.setOnClickListener(onClickListener);
         
-        quitButton = (Button)findViewById(R.id.buttonTilbake);
-        quitButton.setOnClickListener(onClickListener);
+        
+        if(byttetSprak)
+        {
+        	changeLang("no_NO");
+        }
     }
 	
 	@Override
@@ -247,12 +251,19 @@ public class MainActivity extends Activity {
 		Log.d("MAINACTIVITY", "Er i onResume");
 	    super.onResume();	    
 	    
-  		savePrefs("ANTALLSPILL", Game.spillTeller);
-  	    savePrefs("SPILLVUNNET", Game.spillVunnetTeller);
-  		savePrefs("SPILLTAPT", Game.spillTaptTeller);
-  		savePrefs("ANTALLORD", Game.globOrdTeller);
-  		savePrefs("ORDRIKTIG", Game.ordRiktigTeller);
-  		savePrefs("ORDFEIL", Game.ordFeilTeller);
+  		nyspillTeller = Game.spillTeller;
+  		nyspillVunnetTeller = Game.spillVunnetTeller;
+  		nyspillTaptTeller = Game.spillTaptTeller;
+  		nyAntallOrdTeller = Game.globOrdTeller;
+  		nyOrdRiktig = Game.ordRiktigTeller; 
+  	    nyOrdFeil = Game.ordFeilTeller;
+  	    
+  		savePrefs("ANTALLSPILL", nyspillTeller);
+  		savePrefs("SPILLVUNNET", nyspillVunnetTeller);
+  		savePrefs("SPILLTAPT", nyspillTaptTeller);
+  		savePrefs("ANTALLORD", nyAntallOrdTeller);
+  		savePrefs("ORDRIKTIG", nyOrdRiktig);
+  		savePrefs("ORDFEIL", nyOrdFeil); 
   		
 		  	if(Game.hiscore > nyHiscore)
 		  	{
@@ -267,7 +278,6 @@ public class MainActivity extends Activity {
         startButton.setText(getString(R.string.start_game));
         rulesButton.setText(getString(R.string.regler));
         languageButton.setText(getString(R.string.statistikk));
-        quitButton.setText(getString(R.string.avslutt));
 	     }
 	
 	public void onStart()
@@ -287,6 +297,7 @@ public class MainActivity extends Activity {
 	{
 		//Variabler
 		dialogBuilder = new AlertDialog.Builder(this);
+		dialogBuilder.setCancelable(false);
 		
 		//Process
 		dialogBuilder.setTitle(getString(R.string.dialogAvsluttTittel));

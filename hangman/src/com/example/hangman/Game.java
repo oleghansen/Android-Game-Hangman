@@ -13,6 +13,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,8 +32,6 @@ public class Game extends Activity {
 	public static int poeng, hiscore, nyHiscore, riktigeOrd, globOrdTeller, ordRiktigTeller, ordFeilTeller, spillTeller, spillVunnetTeller, spillTaptTeller;
 	private TextView ordFelt, multiFelt, poengFelt;
 	private Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, Rb, S, T, U, V, W, X, Y, Z;
-	private String[] alfabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "Rb", "S", "T", "U", "V", "W", "X", "Y", "Z"}; 
-	//private ImageButton muteKnapp;
 	private ImageView imageHangman;
 	private AlertDialog.Builder dialogBuilder;
 	boolean forrigeRett, fForrigeRett;
@@ -45,38 +45,6 @@ public class Game extends Activity {
 		imageHangman = (ImageView)findViewById(R.id.imageHangman);
 		spillTeller++;
 		
-		
-	/*	muteKnapp = (ImageButton)findViewById(R.id.muteButton);
-		muteKnapp.setOnClickListener(new View.OnClickListener() {
-	    	@Override
-			public void onClick(View v) 
-			{
-	    		knappeLyd = MediaPlayer.create(Spill.this, R.raw.knapplyd);
-	    		knappeLyd.start();
-	    		
-	    		if(!muteKnapp.isSelected())
-	    		{
-	    			mediaPlayer.setVolume(0, 0);
-	    			muteKnapp.setSelected(true);
-	    			muteKnapp.setBackgroundResource(R.drawable.mute_1);
-	    			System.out.println("Lyd av.");
-	    			
-	    		}
-	    		else
-	    		{
-	    			mediaPlayer.setVolume(1, 1);
-	    			muteKnapp.setSelected(false);
-	    			muteKnapp.setBackgroundResource(R.drawable.mute_0);
-	    			System.out.println("Lyd på.");
-	    		}
-	    		
-	    		knappeLyd.stop();
-	        	knappeLyd.reset();
-	        	knappeLyd.release();
-	        	knappeLyd=null;
-			}
-	    }); */
-		
 		deklarerKnapper();
 		
 		ordFelt = (TextView) findViewById(R.id.textRulesView);
@@ -87,12 +55,6 @@ public class Game extends Activity {
 		ordTabell = new String[5];
 		Arrays.fill(ordTabell, null);
 
-
-		
-		/* riktigLyd1.setOnCompletionListener(onCompletionListener); */
-		
-
-		
 		ordTeller = 0;
 		poeng = 0;
 		nyttSpill();
@@ -109,23 +71,26 @@ public class Game extends Activity {
 	@Override
 	public void onBackPressed() 
 	{
-		avsluttDialog();
+		avsluttSpillDialog();
 	}
 
-	private void avsluttDialog()
+	private void avsluttSpillDialog()
 	{
 		//Variabler
 		dialogBuilder = new AlertDialog.Builder(this);
+		dialogBuilder.setCancelable(false);
 		
 		//Process
 		dialogBuilder.setTitle(getString(R.string.dialogAvsluttTittel));
-		dialogBuilder.setMessage(getString(R.string.dialogAvslutt));
+		dialogBuilder.setMessage(getString(R.string.dialogAvsluttSpill));
 		
 		dialogBuilder.setPositiveButton((getString(R.string.yes)), new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface dialog, int which)
 			{
 				Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_SHORT).show();
+				spillTaptTeller++;
+				ordFeilTeller++;
 				finish();
 			}
 		});
@@ -133,8 +98,11 @@ public class Game extends Activity {
 		dialogBuilder.setNegativeButton((getString(R.string.no)), null).show();
 		
 		//Output
-		AlertDialog dialogAvslutt = dialogBuilder.create();
+		AlertDialog dialogAvsluttSpill = dialogBuilder.create();
 	}
+	
+	
+	
 	
 	public void nyttSpill()
 	{
@@ -166,8 +134,6 @@ public class Game extends Activity {
 	
 	public void gjett(char a, Button s)
 	{
-	//	bokstavFelt.setText(bokstavString);
-		
 		boolean riktigGjett = false;
 		s.setEnabled(false);
 		
@@ -192,10 +158,7 @@ public class Game extends Activity {
 				
 				if(ferdigOrd.toString().equals(uferdigOrd.toString()))
 				{
-	            	mediaPlayer.stop();
-	            	mediaPlayer.reset();
-	            	mediaPlayer.release();
-	            	mediaPlayer = null;	
+					resetLyd();
 	            	ordRiktigTeller++;
 	            	
 					System.out.println("DU VANT! Poeng:" + poeng);
@@ -224,10 +187,7 @@ public class Game extends Activity {
 			visMultiplier(" ");
 			
 			
-        	mediaPlayer.stop();
-        	mediaPlayer.reset();
-        	mediaPlayer.release();
-        	mediaPlayer = null;		            	
+			resetLyd();              	
         	mediaPlayer = MediaPlayer.create(this, R.raw.feil);
         	mediaPlayer.start();
 		
@@ -265,50 +225,32 @@ public class Game extends Activity {
 		{
 			switch(riktigGjettTeller){
             case 1:	
-            	mediaPlayer.stop();
-            	mediaPlayer.reset();
-            	mediaPlayer.release();
-            	mediaPlayer = null;	
+            	resetLyd();  
             	mediaPlayer = MediaPlayer.create(this, R.raw.riktig1);
             	mediaPlayer.start();
             break;
             case 2:	
-            	mediaPlayer.stop();
-            	mediaPlayer.reset();
-            	mediaPlayer.release();
-            	mediaPlayer = null;		            	
+            	resetLyd();  	            	
             	mediaPlayer = MediaPlayer.create(this, R.raw.riktig2);
             	mediaPlayer.start();
             break;
             case 3:	
-            	mediaPlayer.stop();
-            	mediaPlayer.reset();
-            	mediaPlayer.release();
-            	mediaPlayer = null;		            	
+            	resetLyd();  	            	
             	mediaPlayer = MediaPlayer.create(this, R.raw.riktig3);
             	mediaPlayer.start();	            	
             break;
             case 4:	
-            	mediaPlayer.stop();
-            	mediaPlayer.reset();
-            	mediaPlayer.release();
-            	mediaPlayer = null;		            	
+            	resetLyd();  	            	
             	mediaPlayer = MediaPlayer.create(this, R.raw.riktig4);
             	mediaPlayer.start();
             break;
             case 5:	
-            	mediaPlayer.stop();
-            	mediaPlayer.reset();
-            	mediaPlayer.release();
-            	mediaPlayer = null;		            	
+            	resetLyd();  	            	
             	mediaPlayer = MediaPlayer.create(this, R.raw.riktig5);
             	mediaPlayer.start();
             break;
             case 6:
-            	mediaPlayer.stop();
-            	mediaPlayer.reset();
-            	mediaPlayer.release();
-            	mediaPlayer = null;		            	
+            	resetLyd();  	            	
             	mediaPlayer = MediaPlayer.create(this, R.raw.riktig6);
             	mediaPlayer.start();
             break;
@@ -316,14 +258,20 @@ public class Game extends Activity {
 		}
 		else
 		{
-        	mediaPlayer.stop();
-        	mediaPlayer.reset();
-        	mediaPlayer.release();
-        	mediaPlayer = null;		            	
+        	resetLyd();            	
         	mediaPlayer = MediaPlayer.create(this, R.raw.riktig6);
         	mediaPlayer.start();
 		}
 	}
+	
+	private void resetLyd()
+	{
+    	mediaPlayer.stop();
+    	mediaPlayer.reset();
+    	mediaPlayer.release();
+    	mediaPlayer = null;		
+	}
+	
 	private void tegnHangman()
 	{
 		if(feilGjettTeller >= 1)
@@ -362,8 +310,7 @@ public class Game extends Activity {
 	        	mediaPlayer.start();
 	        	ordFeilTeller++;
 	        	spillTaptTeller++;
-				System.out.println("Avslutter spill");
-				finish();
+	        	feilOrdDialog();
 	        break;
 	        
 	    	}
@@ -773,4 +720,103 @@ public class Game extends Activity {
 				bu.setBackgroundResource(R.xml.rounded_red); bu.setEnabled(false);
 			}
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		getMenuInflater().inflate(R.menu.exitmain, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		
+		if(item.getItemId() == R.id.exit)
+		{
+			avsluttAppDialog();
+		}
+		else if(item.getItemId() == R.id.home)
+		{
+			onBackPressed();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	private void avsluttAppDialog()
+	{
+		//Variabler
+		dialogBuilder = new AlertDialog.Builder(this);
+		dialogBuilder.setCancelable(false);
+		
+		//Process
+		dialogBuilder.setTitle(getString(R.string.dialogAvsluttTittel));
+		dialogBuilder.setMessage(getString(R.string.dialogAvsluttApp));
+		
+		dialogBuilder.setPositiveButton((getString(R.string.yes)), new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which)
+			{
+				
+				spillTaptTeller++;
+				ordFeilTeller++;
+				finish();
+			}
+		});
+		
+		dialogBuilder.setNegativeButton((getString(R.string.no)), null).show();
+		
+		//Output
+		AlertDialog dialogAvsluttApp = dialogBuilder.create();
+	}
+	
+	private void feilOrdDialog()
+	{
+		//Variabler
+		deaktiverKnapper();
+		dialogBuilder = new AlertDialog.Builder(this);
+		dialogBuilder.setCancelable(false);
+		
+		//Process
+		ferdigOrd = ferdigOrd.replaceAll("\\s+","");
+		dialogBuilder.setTitle(getString(R.string.beklager));
+		dialogBuilder.setMessage(getString(R.string.beklagertekst) + " " + ferdigOrd + "\n" + getString(R.string.beklagertekst2));
+		
+		dialogBuilder.setPositiveButton((getString(R.string.yes)), new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which)
+			{
+				
+				ordTabell = new String[5];
+				Arrays.fill(ordTabell, null);
+				ordTeller = 0;
+				poeng = 0;
+				spillTeller++;
+	    		imageHangman.setImageResource(R.drawable.h0);
+	    		tilbakestillKnapper();
+	    		poengFelt.setText(String.valueOf(poeng));
+	    		nyttSpill();
+			}
+		});
+		
+		dialogBuilder.setNegativeButton((getString(R.string.no)), new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which)
+			{
+				finish();
+				System.out.println("Avslutter spill");
+			}
+		}).show();
+		//Output
+		
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		finish();
+		
+	}
+	
+	
 }

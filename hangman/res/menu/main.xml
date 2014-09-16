@@ -2,19 +2,24 @@
     	xmlns:app="http://schemas.android.com/apk/res-auto"
    		 xmlns:tools="http://schemas.android.com/tools"
   	     tools:context="com.example.hangman.MainActivity" >
-
-
+		
         <item android:id="@+id/language_no"
         android:icon="@drawable/lang_no"
         android:title="no" 
         android:orderInCategory="100"
-        android:showAsAction="ifRoom"/>
+        android:showAsAction="always"/>
         
         <item android:id="@+id/language_en"
         android:icon="@drawable/lang_en"
         android:title="en" 
         android:orderInCategory="200"
-        android:showAsAction="ifRoom"/>
+        android:showAsAction="always"/>
+        
+        <item android:id="@+id/exit"
+		android:icon="@android:drawable/ic_menu_close_clear_cancel"
+		android:title="Exit"
+		android:orderInCategory="300"
+		android:showAsAction="always"/>
         
 
 </menu>

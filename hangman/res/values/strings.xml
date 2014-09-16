@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Hangman Deluxe</string>
+    <string name="app_name">Hangman</string>
     <string name="action_settings">Settings</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -16,6 +16,9 @@
     <string name="antallspill">Games played</string>
     <string name="vunnet">Won</string>
     <string name="tapt">Lost</string>
+    <string name="beklager">Sorry</string>
+    <string name="beklagertekst">You did not find the word. The word was: </string>
+    <string name="beklagertekst2">Do you want to try again?</string>
     <string name="antallord">Words guessed</string>
     <string name="tilbake">Back</string>
     <string name="tilbakestillstat">Tip: Bad results? You can reset game statistics by clicking the highscore field on the top of the main menu screen.</string>
@@ -25,6 +28,7 @@
     <string name="title">Hangman</string>
     <string name="dialogAvslutt">Are you sure you want to quit?</string>
     <string name="dialogAvsluttTittel">Quit?</string>
+    <string name="dialogAvsluttSpill">Are you sure you want to quit this round and return to the main menu? It will count as a loss in the game stati.</string>
     <string name="rules"> Welcome to Hangman Deluxe! When a new game begins, a new random word is generated. Your goal is to find out what the word is. To do so, you will have to guess what characters the word consists of. \n \n Click a character to guess. You only got 8 chances, so pick carefully. </string> 
     <string name="a">A</string>
     <string name="b">B</string>

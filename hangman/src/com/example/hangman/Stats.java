@@ -2,11 +2,15 @@ package com.example.hangman;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -20,8 +24,8 @@ public class Stats extends Activity {
 
 	
 	private TextView tittel, highscoreTxt, antSpillTxt, antOrdTxt, antSpillVunnetTxt, antSpillTaptTxt, antOrdRiktigTxt, antOrdFeilTxt;
-	private Button tilbakeKnapp;
 	private Animation fadeIn;
+	private AlertDialog.Builder dialogBuilder;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,6 @@ public class Stats extends Activity {
 		antSpillTaptTxt = (TextView)findViewById(R.id.inAntallSpillTapt);
 		antOrdRiktigTxt = (TextView)findViewById(R.id.inAntallOrdRiktig);
 		antOrdFeilTxt = (TextView)findViewById(R.id.inAntallOrdFeil);
-		tilbakeKnapp = (Button)findViewById(R.id.buttonTilbake);
 		highscoreTxt = (TextView)findViewById(R.id.inHighscore);
 		
 		
@@ -44,7 +47,7 @@ public class Stats extends Activity {
 		
 		fadeIn = AnimationUtils.loadAnimation(Stats.this, android.R.anim.fade_in);
 		fadeIn.setDuration(2000);
-		
+		  
 		tittel.startAnimation(fadeIn);
 		antSpillTxt.startAnimation(fadeIn);
 		antSpillVunnetTxt.startAnimation(fadeIn);
@@ -57,7 +60,6 @@ public class Stats extends Activity {
 		//------------------------------------------------
 		
 		
-		tilbakeKnapp.setOnClickListener(onClickListener);
 		loadPrefs();
 	}
 	
@@ -96,17 +98,6 @@ public class Stats extends Activity {
 			return j;
 		}
 	}
-	
-	private OnClickListener onClickListener = new OnClickListener() {
-		 @Override
-		 public void onClick(View v) {
-			 
-		  if(v.getId() == R.id.buttonTilbake)
-		  {
-			  finish();
-		  }
-		 }
-	};
 
 	@Override
 	protected void onPause() {
@@ -126,16 +117,68 @@ public class Stats extends Activity {
 		antSpillTaptTxt = (TextView)findViewById(R.id.inAntallSpillTapt);
 		antOrdRiktigTxt = (TextView)findViewById(R.id.inAntallOrdRiktig);
 		antOrdFeilTxt = (TextView)findViewById(R.id.inAntallOrdFeil);
-		tilbakeKnapp = (Button)findViewById(R.id.buttonTilbake);
 		highscoreTxt = (TextView)findViewById(R.id.inHighscore);
         
-		tilbakeKnapp.setOnClickListener(onClickListener);
 		loadPrefs();
     }
 	
 	@Override
 	public void onBackPressed() 
 	{
+		finish();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		getMenuInflater().inflate(R.menu.exitmain, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		
+		if(item.getItemId() == R.id.exit)
+		{
+			avsluttAppDialog();
+		}
+		else if(item.getItemId() == R.id.home)
+		{
+			onBackPressed();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	private void avsluttAppDialog()
+	{
+		//Variabler
+		dialogBuilder = new AlertDialog.Builder(this);
+		dialogBuilder.setCancelable(false);
+		
+		//Process
+		dialogBuilder.setTitle(getString(R.string.dialogAvsluttTittel));
+		dialogBuilder.setMessage(getString(R.string.dialogAvsluttApp));
+		
+		dialogBuilder.setPositiveButton((getString(R.string.yes)), new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which)
+			{
+
+				onDestroy();
+			}
+		});
+		
+		dialogBuilder.setNegativeButton((getString(R.string.no)), null).show();
+		
+		//Output
+		AlertDialog dialogAvsluttApp = dialogBuilder.create();
+	}
+	
+	@Override
+	protected void onDestroy() 
+	{
+		super.onDestroy();
 		finish();
 	}
 	
