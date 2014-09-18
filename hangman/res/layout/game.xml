@@ -453,4 +453,14 @@
          android:textColor="#00CC00"
          android:textSize="20sp" />
 
+     <TextView
+         android:id="@+id/ordOversiktTekst"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_alignParentTop="true"
+         android:textAppearance="?android:attr/textAppearanceSmall"
+         android:textColor="#FFFFFF"
+         android:textSize="25sp" />
+
 </RelativeLayout>

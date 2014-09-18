@@ -13,8 +13,10 @@
     <string name="avslutt">Quit</string>
     <string name="riktig">Correct</string>
     <string name="feil">Wrong</string>
+    <string name="ord">Word: </string>
     <string name="antallspill">Games played</string>
     <string name="vunnet">Won</string>
+    <string name="hadet">Good bye!</string>
     <string name="tapt">Lost</string>
     <string name="beklager">Sorry</string>
     <string name="beklagertekst">You did not find the word. The word was: </string>

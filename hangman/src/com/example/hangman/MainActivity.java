@@ -12,7 +12,6 @@ import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,13 +33,16 @@ public class MainActivity extends Activity {
 	private Locale myLocale;
 	private ImageView imageHangman;
 	private boolean byttetSprak;
-	public static int nyHiscore, nyspillTeller, nyspillVunnetTeller, nyspillTaptTeller, nyAntallOrdTeller, nyOrdRiktig, nyOrdFeil;
+	public static int nyHiscore, nyHiscoreHjelp, nyspillTeller, nyspillVunnetTeller, nyspillTaptTeller, nyAntallOrdTeller, nyOrdRiktig, nyOrdFeil;
+	final static int LAGRERESULTAT = 69;
+	public final static int AVSLUTTAPPRESULTAT = 99;
 	private Animation fadeIn, tittelAnim;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+       
 
             minSang = MediaPlayer.create(MainActivity.this, R.raw.soundtrack);
             minSang.start();
@@ -58,6 +60,9 @@ public class MainActivity extends Activity {
 	        
 	        languageButton = (Button)findViewById(R.id.buttonSprak);
 	        languageButton.setOnClickListener(onClickListener);
+	        
+	        loadPrefs();
+	        highscoreFelt.setText("Highscore: " + (nyHiscoreHjelp));
 	        
 	        byttetSprak = false;
 	 
@@ -107,7 +112,7 @@ public class MainActivity extends Activity {
 					            minSang.start();
 							}
 							Intent startGame = new Intent("com.example.hangman.SPILL");
-							startActivity(startGame);
+							startActivityForResult(startGame, LAGRERESULTAT);
 	      	             break;
 	      	             case R.id.buttonRegler:
 	      					knappeLyd = MediaPlayer.create(MainActivity.this, R.raw.knapplyd);
@@ -123,7 +128,7 @@ public class MainActivity extends Activity {
 					            minSang.start();
 							}
 							Intent startRules = new Intent("com.example.hangman.RULES");
-							startActivity(startRules);
+							startActivityForResult(startRules, 0);
 	      	             break;
 	      	             case R.id.buttonSprak:
 	      					knappeLyd = MediaPlayer.create(MainActivity.this, R.raw.knapplyd);
@@ -139,7 +144,7 @@ public class MainActivity extends Activity {
 					            minSang.start();
 							}
 							Intent startLanguageScreen = new Intent("com.example.hangman.LANG");
-							startActivity(startLanguageScreen);
+							startActivityForResult(startLanguageScreen, 0);
 	      	             break;
 	      	             case R.id.textHighscore:
 	      	            	 resetDialog();
@@ -152,6 +157,14 @@ public class MainActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		
+		if(minSang!=null)
+		{
+			minSang.stop();
+	    	minSang.reset();
+	    	minSang.release();
+	    	minSang = null;
+		}
+
   		nyHiscore = Game.hiscore;
   	    
   		savePrefs("NYHIGHSCORE", nyHiscore);
@@ -166,6 +179,43 @@ public class MainActivity extends Activity {
   		finish();
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+			if(resultCode == AVSLUTTAPPRESULTAT)
+			{
+				onDestroy();
+			}
+			
+			else if(requestCode == LAGRERESULTAT)
+			{
+			  		nyspillTeller = Game.spillTeller;
+			  		nyspillVunnetTeller = Game.spillVunnetTeller;
+			  		nyspillTaptTeller = Game.spillTaptTeller;
+			  		nyAntallOrdTeller = Game.globOrdTeller;
+			  		nyOrdRiktig = Game.ordRiktigTeller; 
+			  	    nyOrdFeil = Game.ordFeilTeller;
+			  	    
+			  		savePrefs("ANTALLSPILL", nyspillTeller);
+			  		savePrefs("SPILLVUNNET", nyspillVunnetTeller);
+			  		savePrefs("SPILLTAPT", nyspillTaptTeller);
+			  		savePrefs("ANTALLORD", nyAntallOrdTeller);
+			  		savePrefs("ORDRIKTIG", nyOrdRiktig);
+			  		savePrefs("ORDFEIL", nyOrdFeil); 
+			  		
+			  		
+					  	if(Game.hiscore > nyHiscore)
+					  	{
+					  		nyHiscore = Game.hiscore;
+					  		savePrefs("NYHIGHSCORE", nyHiscore);
+					  	}
+					loadPrefs();
+			        startButton.setText(getString(R.string.start_game));
+			        rulesButton.setText(getString(R.string.regler));
+			        languageButton.setText(getString(R.string.statistikk));
+				}
+		}
 	
 	
 	@Override
@@ -201,7 +251,6 @@ public class MainActivity extends Activity {
 		Configuration config = new Configuration();
 		config.locale = myLocale;
 		this.getApplicationContext().getResources().updateConfiguration(config, null);
-		System.out.println("Bytter språk");
         startButton.setText(getString(R.string.start_game));
         rulesButton.setText(getString(R.string.regler));
         languageButton.setText(getString(R.string.statistikk));
@@ -232,6 +281,8 @@ public class MainActivity extends Activity {
         languageButton = (Button)findViewById(R.id.buttonSprak);
         languageButton.setOnClickListener(onClickListener);
         
+        highscoreFelt.setText("Highscore: " + (nyHiscoreHjelp));
+        
         
         if(byttetSprak)
         {
@@ -248,49 +299,17 @@ public class MainActivity extends Activity {
 	@Override
 	public void onResume()
 	    {  // After a pause OR at startup
-		Log.d("MAINACTIVITY", "Er i onResume");
 	    super.onResume();	    
-	    
-  		nyspillTeller = Game.spillTeller;
-  		nyspillVunnetTeller = Game.spillVunnetTeller;
-  		nyspillTaptTeller = Game.spillTaptTeller;
-  		nyAntallOrdTeller = Game.globOrdTeller;
-  		nyOrdRiktig = Game.ordRiktigTeller; 
-  	    nyOrdFeil = Game.ordFeilTeller;
-  	    
-  		savePrefs("ANTALLSPILL", nyspillTeller);
-  		savePrefs("SPILLVUNNET", nyspillVunnetTeller);
-  		savePrefs("SPILLTAPT", nyspillTaptTeller);
-  		savePrefs("ANTALLORD", nyAntallOrdTeller);
-  		savePrefs("ORDRIKTIG", nyOrdRiktig);
-  		savePrefs("ORDFEIL", nyOrdFeil); 
-  		
-		  	if(Game.hiscore > nyHiscore)
-		  	{
-		  		nyHiscore = Game.hiscore;
-		  		savePrefs("NYHIGHSCORE", nyHiscore);
-		  		
-		  		System.out.println("HER SKAL DET LAGRES");
-		  		
-		  		// Lagrer ny hiscore
-		  	}
-		loadPrefs();
-        startButton.setText(getString(R.string.start_game));
-        rulesButton.setText(getString(R.string.regler));
-        languageButton.setText(getString(R.string.statistikk));
 	     }
 	
 	public void onStart()
     {  
     super.onStart();
-    Log.d("MAINACTIVITY", "Er i onStart");
-	loadPrefs();
      }
 	
 	public void onPause()
     {  
     super.onPause();
-    Log.d("MAINACTIVITY", "Er i onPause");
      }
 
 	private void avsluttDialog()
@@ -307,7 +326,7 @@ public class MainActivity extends Activity {
 		{
 			public void onClick(DialogInterface dialog, int which)
 			{
-				Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Good bye!", Toast.LENGTH_SHORT).show();
 				onDestroy();
 			}
 		});
@@ -360,6 +379,7 @@ public class MainActivity extends Activity {
 	{
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 		int hsValue = sp.getInt("NYHIGHSCORE", 0);
+		nyHiscoreHjelp = hsValue;
 		highscoreFelt.setText("Highscore: " + (String.valueOf(hsValue)));
 	}
 }

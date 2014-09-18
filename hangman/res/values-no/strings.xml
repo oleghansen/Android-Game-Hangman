@@ -18,6 +18,8 @@
     <string name="title">Hangman</string>
     <string name="riktig">Riktig</string>
     <string name="feil">Feil</string>
+    <string name="ord">Ord: </string>
+    <string name="hadet">Ha det bra!</string>
     <string name="antallspill">Runder spilt</string>
     <string name="vunnet">Vunnet</string>
     <string name="tapt">Tapt</string>

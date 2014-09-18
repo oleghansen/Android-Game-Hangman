@@ -22,13 +22,10 @@ public class Rules extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.rules);
-		
 		txtShow = (TextView) findViewById (R.id.textRulesView);
-		regelLapp = (ImageView)findViewById (R.id.imageView1);
-		
+		regelLapp = (ImageView)findViewById (R.id.imageSun);
 		Animation fadeIn = AnimationUtils.loadAnimation(Rules.this, android.R.anim.fade_in);
 		fadeIn.setDuration(3000);
 		txtShow.startAnimation(fadeIn);
@@ -54,9 +51,8 @@ public class Rules extends Activity {
     public void onConfigurationChanged(Configuration newConfig){
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.rules);
-        
 		txtShow = (TextView) findViewById (R.id.textRulesView);
-		regelLapp = (ImageView)findViewById (R.id.imageView1);
+		regelLapp = (ImageView)findViewById (R.id.imageSun);
     }
 	
 	@Override
@@ -67,13 +63,11 @@ public class Rules extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
 		getMenuInflater().inflate(R.menu.exitmain, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
 		
 		if(item.getItemId() == R.id.exit)
 		{
@@ -89,26 +83,19 @@ public class Rules extends Activity {
 	
 	private void avsluttAppDialog()
 	{
-		//Variabler
 		dialogBuilder = new AlertDialog.Builder(this);
 		dialogBuilder.setCancelable(false);
-		
-		//Process
 		dialogBuilder.setTitle(getString(R.string.dialogAvsluttTittel));
 		dialogBuilder.setMessage(getString(R.string.dialogAvsluttApp));
-		
 		dialogBuilder.setPositiveButton((getString(R.string.yes)), new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface dialog, int which)
 			{
-
+				setResult(99);
 				onDestroy();
 			}
-		});
-		
+		});	
 		dialogBuilder.setNegativeButton((getString(R.string.no)), null).show();
-		
-		//Output
 		AlertDialog dialogAvsluttApp = dialogBuilder.create();
 	}
 	

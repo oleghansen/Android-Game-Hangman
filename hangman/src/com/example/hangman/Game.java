@@ -6,13 +6,10 @@ import java.util.Random;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +27,7 @@ public class Game extends Activity {
 	private String[] ordTabell;
 	private int feilGjettTeller, riktigGjettTeller, ordTeller;
 	public static int poeng, hiscore, nyHiscore, riktigeOrd, globOrdTeller, ordRiktigTeller, ordFeilTeller, spillTeller, spillVunnetTeller, spillTaptTeller;
-	private TextView ordFelt, multiFelt, poengFelt;
+	private TextView ordFelt, multiFelt, poengFelt, ordOversiktFelt;
 	private Button A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, Rb, S, T, U, V, W, X, Y, Z;
 	private ImageView imageHangman;
 	private AlertDialog.Builder dialogBuilder;
@@ -48,7 +45,8 @@ public class Game extends Activity {
 		deklarerKnapper();
 		
 		ordFelt = (TextView) findViewById(R.id.textRulesView);
-		//bokstavFelt = (TextView) findViewById(R.id.textView2);
+		ordOversiktFelt = (TextView) findViewById(R.id.ordOversiktTekst);
+		ordOversiktFelt.setText(ordTeller + "/5");
 		multiFelt = (TextView) findViewById(R.id.textMulti);
 		poengFelt = (TextView) findViewById(R.id.textPoeng);
 		
@@ -76,11 +74,8 @@ public class Game extends Activity {
 
 	private void avsluttSpillDialog()
 	{
-		//Variabler
 		dialogBuilder = new AlertDialog.Builder(this);
 		dialogBuilder.setCancelable(false);
-		
-		//Process
 		dialogBuilder.setTitle(getString(R.string.dialogAvsluttTittel));
 		dialogBuilder.setMessage(getString(R.string.dialogAvsluttSpill));
 		
@@ -95,10 +90,18 @@ public class Game extends Activity {
 			}
 		});
 		
-		dialogBuilder.setNegativeButton((getString(R.string.no)), null).show();
+		dialogBuilder.setNegativeButton((getString(R.string.no)), new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which)
+			{
+				
+				dialog.dismiss();
+			}
+		});
 		
-		//Output
-		AlertDialog dialogAvsluttSpill = dialogBuilder.create();
+		AlertDialog alert = dialogBuilder.create();
+		alert.show();
+		
 	}
 	
 	
@@ -107,12 +110,13 @@ public class Game extends Activity {
 	public void nyttSpill()
 	{
 		riktigBokstavString=""; //for orientation change
-		feilBokstavString=""; //for orientation change
+		feilBokstavString="";   //for orientation change
 		forrigeRett = false;
 		fForrigeRett = false;
 		feilGjettTeller = 0;
 		riktigGjettTeller = 0;
 		ferdigOrd = trekkOrd();
+		
 		uferdigOrd = new StringBuilder();	
 		uferdigOrd.append(ferdigOrd);
 		
@@ -121,9 +125,8 @@ public class Game extends Activity {
 			uferdigOrd.setCharAt(i, '_');
 			i++;
 		}
-		System.out.println("Uferdig: " + uferdigOrd);
-		System.out.println("Ferdig: " + ferdigOrd);
 		ordFelt.setText(uferdigOrd);
+		ordOversiktFelt.setText(ordTeller + "/5");
 		
 	}
 	
@@ -145,8 +148,6 @@ public class Game extends Activity {
 				regnUtMultiplier();
 				riktigGjett = true;
 				riktigGjettTeller++;
-				System.out.println("Bokstaven " + a + " finnes i ordet!");
-				System.out.println("Poeng: " + poeng);
 				uferdigOrd.setCharAt(i, a);
 				ordFelt.setText(uferdigOrd);
 				poengFelt.setText(String.valueOf(poeng));
@@ -160,8 +161,6 @@ public class Game extends Activity {
 				{
 					resetLyd();
 	            	ordRiktigTeller++;
-	            	
-					System.out.println("DU VANT! Poeng:" + poeng);
 					if(poeng > hiscore)
 					{
 						hiscore = poeng;
@@ -182,7 +181,7 @@ public class Game extends Activity {
 			forrigeRett=false;
 			fForrigeRett=false;
 			feilGjettTeller++;
-			System.out.println(feilGjettTeller);
+
 			s.setBackgroundResource(R.xml.rounded_red);
 			visMultiplier(" ");
 			
@@ -327,7 +326,7 @@ public class Game extends Activity {
 		{
 			if(Arrays.asList(ordTabell).contains(randomOrd))
 			{
-				System.out.println(randomOrd + " er allerede trekt");
+				//Checks whether a word is already been used or not.
 				break;
 			}
 			else if(ordTabell[i] == null)
@@ -731,13 +730,22 @@ public class Game extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		
-		if(item.getItemId() == R.id.exit)
+		switch(item.getItemId())
 		{
+		case R.id.exit:
 			avsluttAppDialog();
-		}
-		else if(item.getItemId() == R.id.home)
-		{
-			onBackPressed();
+		break;
+		case android.R.id.home:
+			if(feilGjettTeller==0)
+			{
+				spillTeller--;
+				globOrdTeller--;
+				finish();
+			}
+			else
+			{
+				avsluttSpillDialog();
+			}
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -760,14 +768,23 @@ public class Game extends Activity {
 				
 				spillTaptTeller++;
 				ordFeilTeller++;
+				setResult(99);
 				finish();
 			}
 		});
 		
-		dialogBuilder.setNegativeButton((getString(R.string.no)), null).show();
+		dialogBuilder.setNegativeButton((getString(R.string.no)), new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which)
+			{
+				
+				dialog.dismiss();
+			}
+		});
 		
-		//Output
-		AlertDialog dialogAvsluttApp = dialogBuilder.create();
+		AlertDialog alert = dialogBuilder.create();
+		alert.show();
+
 	}
 	
 	private void feilOrdDialog()
@@ -804,18 +821,14 @@ public class Game extends Activity {
 			public void onClick(DialogInterface dialog, int which)
 			{
 				finish();
-				System.out.println("Avslutter spill");
 			}
 		}).show();
-		//Output
 		
 	}
 	
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		finish();
-		
 	}
 	
 	
